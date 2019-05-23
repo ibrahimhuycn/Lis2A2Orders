@@ -172,6 +172,10 @@ Public Class Connection
         Next
         Dim tr = New TerminatorRecord()
         lisRecordList.Add(tr)
-        _lisParser.SendRecords(lisRecordList)
+        Try
+            _lisParser.SendRecords(lisRecordList)
+        Catch ex As Exception
+            RaiseEvent PushingLogs(ex.Message, LogItem.LogType.Exception)
+        End Try
     End Sub
 End Class

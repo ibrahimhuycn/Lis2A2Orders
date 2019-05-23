@@ -3,6 +3,7 @@
     Private _connectionType As String
     Private _isServer As Boolean
     Private _tabPage2Name As String
+    Private _LastSampleTime As String
 
     Public Sub New()
         ChemistryParameters = My.Settings.ParametersCHM.Split("|")
@@ -38,6 +39,14 @@
         Get
             Return _tabPage2Name
         End Get
+    End Property
+    Public Property LastSampleTime As String
+        Get
+            Return _LastSampleTime
+        End Get
+        Set
+            _LastSampleTime = Value.ToString("yyyy/MM/dd HH:mm:ss.fff")
+        End Set
     End Property
 
     Public Property AnalysisCategory As String
@@ -118,7 +127,8 @@
                     .ParametersFCM = FCM,
                     .Port = newSettings.Port,
                     .PortCOM = newSettings.SerialPort,
-                    .SelectedOrdersFile = newSettings.SelectedOrdersFile}
+                    .SelectedOrdersFile = newSettings.SelectedOrdersFile,
+                    .LastSampleTime = newSettings.LastSampleTime}
             End If
         Catch ex As InvalidExpressionException
             MsgBox(String.Format("Could not save settings.{0}Error: {1}", vbCr, ex.Message), vbExclamation, "Settings: Invalid Expression")

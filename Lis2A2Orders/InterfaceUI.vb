@@ -53,8 +53,52 @@ Public Class InterfaceUI
 
     Private Sub PrepInitiateNewRequest()
 
-        Dim Data As IEnumerable(Of LisRequestData) = LisEnquiry.GetData(Now.ToString("yyyy/MM/dd") & " 12:29:000")
-        Dim a = Data.Count
+        Dim Data As IEnumerable(Of LisRequestData) = LisEnquiry.GetData(Now.ToString("yyyy/MM/dd") & " 13:30:000")
+        If Not Data.Count = 0 Then
+            Dim LastSampleTime = Data(Data.Count - 1).created_at
+            My.Settings.LastSampleTime = LastSampleTime.ToString("yyyy/MMM/dd HH:mm:ss.fff")
+            Try
+                Dim Requests As New RequestDataEventArgs
+                Requests.RequestData.Clear()
+
+                For Each d In Data
+                    Dim Sex As PatientSex
+                    If d.Genders_id = 1 Then Sex = PatientSex.Male
+                    If d.Genders_id = 2 Then Sex = PatientSex.Female
+                    Dim LastName As String = ""
+                    Dim FirstName As String = ""
+                    Dim PatientNamesSplit = d.PatientName.Split(" ")
+                    LastName = PatientNamesSplit(PatientNamesSplit.Count - 1)
+                    Dim RequestedTestsList As String = ""
+                    If My.Settings.SelectedOrdersFile.ToUpper = "ALL" Then RequestedTestsList = My.Settings.ParametersAll
+                    If My.Settings.SelectedOrdersFile.ToUpper = "CHM" Then RequestedTestsList = My.Settings.ParametersCHM
+                    If My.Settings.SelectedOrdersFile.ToUpper = "FCM" Then RequestedTestsList = My.Settings.ParametersFCM
+
+                    For Each n In PatientNamesSplit
+                        If Not n = LastName Then
+                            FirstName = FirstName & " " & n
+                        End If
+                        FirstName.Trim()
+                    Next
+
+                    Requests.RequestData.Add(New Request With {.Priority = RequestPriority.R,
+                                             .SampleCollectionTime = d.created_at,
+                                             .TestActionCode = TestActionCode.N,
+                                             .Patient = New Patient With {.PatientID = d.PatientNo,
+                                                            .BirthDate = d.DateOfBirth,
+                                                            .PatientSex = Sex,
+                                                            .PatientName = New PatientName With {.LastName = LastName, .FirstName = FirstName}},
+                                              .OrderNumber = Now.ToString("mm:ss.fff"),
+                                              .Specimen = New Sample With {.SpecimenID = d.Barcode},
+                                              .RequestedTests = RequestedTestsList})
+                Next
+
+                _astmConnection.PrepAndSendData(Requests)
+            Catch ex As Exception
+
+            End Try
+        End If
+
     End Sub
 
     Private Sub ProgressDisplayUI(progress As Double)
