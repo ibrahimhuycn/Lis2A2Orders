@@ -1,9 +1,7 @@
 ﻿Imports Essy.Lis.LIS02A2
-Imports Lis2A2Orders
 Imports System.ComponentModel
 Imports System.IO
 Imports System.Reflection
-Imports System.Timers
 
 <Assembly: log4net.Config.XmlConfigurator(Watch:=True)>
 
@@ -54,7 +52,9 @@ Public Class InterfaceUI
     End Sub
 
     Private Sub PrepInitiateNewRequest()
-        _astmConnection.PrepAndSendData(New RequestDataEventArgs)
+
+        Dim Data As IEnumerable(Of LisRequestData) = LisEnquiry.GetData(Now.ToString("yyyy/MM/dd") & " 12:29:000")
+        Dim a = Data.Count
     End Sub
 
     Private Sub ProgressDisplayUI(progress As Double)

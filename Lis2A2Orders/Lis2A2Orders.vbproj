@@ -51,6 +51,9 @@
     <ApplicationIcon>tetta_ico_4k1_icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dapper, Version=1.60.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.60.6\lib\net451\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="E1394-91, Version=5.2.0.34, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Essy.LIS.LIS02A2.5.2.0\lib\net46\E1394-91.dll</HintPath>
     </Reference>
@@ -60,10 +63,12 @@
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="slf4net, Version=0.1.32.1, Culture=neutral, PublicKeyToken=592edb3b6b36b5ba, processorArchitecture=MSIL">
       <HintPath>..\packages\slf4net.0.1.32.1\lib\net35\slf4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -90,6 +95,10 @@
   <ItemGroup>
     <Compile Include="AstmConstants.vb" />
     <Compile Include="Connection.vb" />
+    <Compile Include="Data\Helper.vb" />
+    <Compile Include="Data\LisEnquiry.vb" />
+    <Compile Include="Data\LisRequestData.vb" />
+    <Compile Include="Encryption\Crypto.vb" />
     <Compile Include="LogItem.vb" />
     <Compile Include="InterfaceUI.vb">
       <SubType>Form</SubType>
@@ -167,5 +176,6 @@
     <None Include="Resources\open-uri20141031-11650-1uyv8ex1.jpeg" />
     <Content Include="tetta_ico_4k1_icon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
