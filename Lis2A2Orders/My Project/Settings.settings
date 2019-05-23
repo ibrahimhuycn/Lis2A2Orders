@@ -1,0 +1,51 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="AppName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">U-WAM Order Server</Value>
+    </Setting>
+    <Setting Name="IsServer" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="IPAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.1.5</Value>
+    </Setting>
+    <Setting Name="Port" Type="System.String" Scope="User">
+      <Value Profile="(Default)">40001</Value>
+    </Setting>
+    <Setting Name="LogPageName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Log Display</Value>
+    </Setting>
+    <Setting Name="NotifyIconText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">U-WAM Orders</Value>
+    </Setting>
+    <Setting Name="PortCOM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM1</Value>
+    </Setting>
+    <Setting Name="EthernetOrSerial" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Ethernet</Value>
+    </Setting>
+    <Setting Name="ParametersCHM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">URO|BLD|BIL|KET|GLU|PRO|PH|NIT|LEU|S.G.(Ref)|COLOR|ColorRANK|CLOUD</Value>
+    </Setting>
+    <Setting Name="ParametersFCM" Type="System.String" Scope="User">
+      <Value Profile="(Default)">RBC|WBC|WBC Clumps|EC|Squa.EC|Non SEC|CAST|Hy.CAST|Path.CAST|BACT|X'TAL|YLC|SPERM|MUCUS</Value>
+    </Setting>
+    <Setting Name="AnalysisCategories" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Both</Value>
+    </Setting>
+    <Setting Name="OrdersFilePrefix" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ORD</Value>
+    </Setting>
+    <Setting Name="OrdersFileExtension" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.ord</Value>
+    </Setting>
+    <Setting Name="OrdersFileCheckIndicatorExtension" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.ok</Value>
+    </Setting>
+    <Setting Name="SelectedOrdersFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>
