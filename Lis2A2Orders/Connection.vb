@@ -88,7 +88,7 @@ Public Class Connection
     End Enum
 
     Private Sub LISParser_OnReceivedRecord(ByVal Sender As Object, ByVal e As ReceiveRecordEventArgs)
-        Dim record As AbstractLisRecord = e.ReceivedRecord
+        Dim record As Essy.Lis.LIS02A2.AbstractLisRecord = e.ReceivedRecord
         RaiseEvent PushingLogs(record.ToLISString, LogItem.LogType.Received)
         RaiseEvent PushingLogs(record.GetType.ToString, LogItem.LogType.Information)
 
@@ -101,7 +101,7 @@ Public Class Connection
             Case LisRecordType.Result
                 Dim Query As QueryRecord = record
                 RaiseEvent ReceiveQuery(Me, Query)
-                Case LisRecordType.Comment
+            Case LisRecordType.Comment
             Case LisRecordType.Query
             Case LisRecordType.Terminator
             Case LisRecordType.Scientific
@@ -136,10 +136,9 @@ Public Class Connection
     End Sub
 
     Public Sub PrepAndSendData(e As RequestDataEventArgs)
-        Dim lisRecordList = New List(Of AbstractLisRecord)()
+        Dim lisRecordList = New List(Of Essy.Lis.LIS02A2.AbstractLisRecord)()
         Dim hr = New HeaderRecord() With {
-            .SenderID = "Path.Clinical",
-            .Version = "LIS2-A2"}
+            .SenderID = "Path.Clinical"}
         lisRecordList.Add(hr)
 
         Dim PatientSequence As Integer = 1
@@ -157,6 +156,10 @@ Public Class Connection
             Dim parameters() As String = request.RequestedTests.Split("|")
 
             For Each param In parameters
+
+                request.TestActionCode = TestActionCode.A
+                If OrderSequenceNo = 1 Then request.TestActionCode = TestActionCode.N
+
                 Dim Orders As New OrderRecord With {.SequenceNumber = OrderSequenceNo,
                     .ActionCode = request.TestActionCode,
                     .Priority = request.Priority,
@@ -164,6 +167,7 @@ Public Class Connection
                     .RequestedDateTime = request.SampleCollectionTime,
                     .SpecimenID = request.Specimen.SpecimenID,
                     .TestID = New UniversalTestID() With {.ManufacturerCode = param}}
+
 
                 lisRecordList.Add(Orders)
                 OrderSequenceNo += 1

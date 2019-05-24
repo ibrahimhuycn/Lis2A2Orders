@@ -45,7 +45,7 @@
             Return _LastSampleTime
         End Get
         Set
-            _LastSampleTime = Value.ToString("yyyy/MM/dd HH:mm:ss.fff")
+            _LastSampleTime = Value
         End Set
     End Property
 

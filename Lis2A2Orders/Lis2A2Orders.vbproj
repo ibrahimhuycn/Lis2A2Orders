@@ -122,6 +122,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Records\AbstractLisRecordV1.vb" />
+    <Compile Include="Records\AbstractLisSubRecordV1.vb" />
+    <Compile Include="Records\DateTimeUsage.vb" />
+    <Compile Include="Records\DateTimeUsageAttribute.vb" />
+    <Compile Include="Records\LisEnumAttribute.vb" />
+    <Compile Include="Records\LISExtensions.vb" />
+    <Compile Include="Records\LisRecordFieldAttribute.vb" />
+    <Compile Include="Records\LisRecordRemainingFieldsAttribute.vb" />
+    <Compile Include="Records\OrderInformationRecord.vb" />
+    <Compile Include="Records\RecordFields.vb" />
     <Compile Include="SampleData\Patient.vb" />
     <Compile Include="SampleData\Request.vb" />
     <Compile Include="SampleData\Sample.vb" />

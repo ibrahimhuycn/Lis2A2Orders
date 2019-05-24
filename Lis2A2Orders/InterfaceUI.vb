@@ -81,9 +81,9 @@ Public Class InterfaceUI
                         FirstName.Trim()
                     Next
 
-                    Requests.RequestData.Add(New Request With {.Priority = RequestPriority.R,
+                    'Note Action code will be set during transmission
+                    Requests.RequestData.Add(New Request With {.Priority = OrderPriority.Stat,
                                              .SampleCollectionTime = d.created_at,
-                                             .TestActionCode = TestActionCode.N,
                                              .Patient = New Patient With {.PatientID = d.PatientNo,
                                                             .BirthDate = d.DateOfBirth,
                                                             .PatientSex = Sex,
