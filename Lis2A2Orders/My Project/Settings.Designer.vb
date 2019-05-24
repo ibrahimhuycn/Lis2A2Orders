@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -68,7 +68,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
         Public Property IsServer() As Boolean
             Get
                 Return CType(Me("IsServer"),Boolean)
@@ -80,7 +80,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("10.0.110.34")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("192.168.1.10")>  _
         Public Property IPAddress() As String
             Get
                 Return CType(Me("IPAddress"),String)
@@ -222,13 +222,13 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property SelectedOrdersFile() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("ALL")>  _
+        Public Property ActiveTestOrders() As String
             Get
-                Return CType(Me("SelectedOrdersFile"),String)
+                Return CType(Me("ActiveTestOrders"),String)
             End Get
             Set
-                Me("SelectedOrdersFile") = value
+                Me("ActiveTestOrders") = value
             End Set
         End Property
         
@@ -314,6 +314,18 @@ Namespace My
             End Get
             Set
                 Me("LastSampleTime") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property OrdersFilePath() As String
+            Get
+                Return CType(Me("OrdersFilePath"),String)
+            End Get
+            Set
+                Me("OrdersFilePath") = value
             End Set
         End Property
     End Class

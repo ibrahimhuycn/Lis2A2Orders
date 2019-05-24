@@ -137,9 +137,9 @@ Public Class Connection
 
     Public Sub PrepAndSendData(e As RequestDataEventArgs)
         Dim lisRecordList = New List(Of AbstractLisRecord)()
-        Dim hr = New HeaderRecord() With {.ProcessingID = HeaderProcessingID.Production,
-            .SenderID = "SwatInc",
-            .Version = "LIS2A2"}
+        Dim hr = New HeaderRecord() With {
+            .SenderID = "Path.Clinical",
+            .Version = "LIS2-A2"}
         lisRecordList.Add(hr)
 
         Dim PatientSequence As Integer = 1

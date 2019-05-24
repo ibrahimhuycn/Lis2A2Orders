@@ -6,10 +6,10 @@
       <Value Profile="(Default)">U-WAM Order Server</Value>
     </Setting>
     <Setting Name="IsServer" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="IPAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">10.0.110.34</Value>
+      <Value Profile="(Default)">192.168.1.10</Value>
     </Setting>
     <Setting Name="Port" Type="System.String" Scope="User">
       <Value Profile="(Default)">40001</Value>
@@ -44,8 +44,8 @@
     <Setting Name="OrdersFileCheckIndicatorExtension" Type="System.String" Scope="User">
       <Value Profile="(Default)">.ok</Value>
     </Setting>
-    <Setting Name="SelectedOrdersFile" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="ActiveTestOrders" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ALL</Value>
     </Setting>
     <Setting Name="ParametersAll" Type="System.String" Scope="User">
       <Value Profile="(Default)">URO|BLD|BIL|KET|GLU|PRO|PH|NIT|LEU|S.G.(Ref)|COLOR|ColorRANK|CLOUD|RBC|WBC|WBC Clumps|EC|Squa.EC|Non SEC|CAST|Hy.CAST|Path.CAST|BACT|X'TAL|YLC|SPERM|MUCUS</Value>
@@ -66,6 +66,9 @@
       <Value Profile="(Default)">9DL0Ltq+1XGOW2AH9Cceqjz7Qxidq1BC</Value>
     </Setting>
     <Setting Name="LastSampleTime" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="OrdersFilePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

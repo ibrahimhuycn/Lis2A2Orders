@@ -70,9 +70,9 @@ Public Class InterfaceUI
                     Dim PatientNamesSplit = d.PatientName.Split(" ")
                     LastName = PatientNamesSplit(PatientNamesSplit.Count - 1)
                     Dim RequestedTestsList As String = ""
-                    If My.Settings.SelectedOrdersFile.ToUpper = "ALL" Then RequestedTestsList = My.Settings.ParametersAll
-                    If My.Settings.SelectedOrdersFile.ToUpper = "CHM" Then RequestedTestsList = My.Settings.ParametersCHM
-                    If My.Settings.SelectedOrdersFile.ToUpper = "FCM" Then RequestedTestsList = My.Settings.ParametersFCM
+                    If My.Settings.ActiveTestOrders.ToUpper = "ALL" Then RequestedTestsList = My.Settings.ParametersAll
+                    If My.Settings.ActiveTestOrders.ToUpper = "CHM" Then RequestedTestsList = My.Settings.ParametersCHM
+                    If My.Settings.ActiveTestOrders.ToUpper = "FCM" Then RequestedTestsList = My.Settings.ParametersFCM
 
                     For Each n In PatientNamesSplit
                         If Not n = LastName Then
@@ -117,7 +117,8 @@ Public Class InterfaceUI
         LabelIPAddress.Text = AppSettings.IPAddress
         LabelPort.Text = AppSettings.Port
         LabelModeIndicator.Text = If(AppSettings.IsServer = True, "Server", "Client")
-        TextBoxOrdersPath.Text = AppSettings.OrdersDir
+        ButtonStartServer.Text = If(AppSettings.IsServer = True, "Start Server", "Connect")
+        TextBoxOrdersPath.Text = AppSettings.OrdersFilePath
 
         log.Info("Sub: [" & myName & "]- Application settings refreshed")
         DisplayLogItem("Sub: [" & myName & "]- Application settings refreshed", LogItem.LogType.Information)
@@ -133,7 +134,7 @@ Public Class InterfaceUI
         Try
             'OPEN DIALOG AND STORES ALL EPIDSODE NUMBERS IN ARRAY
             If OrdersFileDialog.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
-                My.Settings.SelectedOrdersFile = OrdersFileDialog.FileName
+                My.Settings.OrdersFilePath = OrdersFileDialog.FileName
                 RaiseEvent OnRefreshAppSettings()
                 log.Info("Sub: [" & myName & "]- Orders File Name: " & OrdersFileDialog.FileName)
                 EpisodeNo = File.ReadAllLines(OrdersFileDialog.FileName)
@@ -183,12 +184,13 @@ Public Class InterfaceUI
             .Port = My.Settings.Port,
             .SerialPort = My.Settings.PortCOM,
             .ConnectionType = My.Settings.EthernetOrSerial,
-            .OrdersDir = My.Settings.SelectedOrdersFile}
+            .OrdersFilePath = My.Settings.OrdersFilePath,
+            .ActiveTestOrders = My.Settings.ActiveTestOrders}
 
 
         log.Info(String.Format("Sub: [{0}]- Settings: IsServer: {1} NotifyIconText: {2} IP: {3} Port: {4} COM Port: {5} ConnectionType: {6} OrdersFilePath: {7}",
                                myName, settings.IsServer, settings.NotifyIconText, settings.IPAddress, settings.Port,
-                               settings.SerialPort, settings.ConnectionType, settings.OrdersDir))
+                               settings.SerialPort, settings.ConnectionType, settings.OrdersFilePath))
         RaiseEvent OnAppSettingsRefreshed(settings)
 
     End Sub

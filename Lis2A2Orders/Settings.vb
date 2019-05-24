@@ -84,14 +84,14 @@
     ReadOnly Property DepositParameters As String()
     Public Property IPAddress As String
     Public Property NotifyIconText As String
-    Public Property OrdersDir As String
+    Public Property OrdersFilePath As String
 
     Public Property Port As Integer
     Public Property SerialPort As String
     Public Property OrdersFileCheckIndicatorExtension As String
     Public Property OrdersFileExtension As String
     Public Property OrdersFilePrefix As String
-    Public Property SelectedOrdersFile As String
+    Public Property ActiveTestOrders As String
 
 
     Public Shared Sub SaveSettings(ByVal newSettings As Settings, ByVal parametersCHM As String, ByVal parametersFCM As String)
@@ -127,8 +127,9 @@
                     .ParametersFCM = FCM,
                     .Port = newSettings.Port,
                     .PortCOM = newSettings.SerialPort,
-                    .SelectedOrdersFile = newSettings.SelectedOrdersFile,
-                    .LastSampleTime = newSettings.LastSampleTime}
+                    .ActiveTestOrders = newSettings.ActiveTestOrders,
+                    .LastSampleTime = newSettings.LastSampleTime,
+                    .OrdersFilePath = newSettings.OrdersFilePath}
             End If
         Catch ex As InvalidExpressionException
             MsgBox(String.Format("Could not save settings.{0}Error: {1}", vbCr, ex.Message), vbExclamation, "Settings: Invalid Expression")
