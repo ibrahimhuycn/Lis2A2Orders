@@ -21,6 +21,7 @@ Public Class Connection
     End Sub
 
     Public Sub InitializeConnection()
+        InterfaceUI.ButtonStartServer.Enabled = False
         Dim connectionSettings As Settings = Me._connectionSettings
         Select Case connectionSettings.ConnectionType
 
@@ -50,6 +51,7 @@ Public Class Connection
                     AddHandler _lisParser.OnSendProgress, AddressOf LISParser_OnSendProgress
                     AddHandler _lisParser.OnReceivedRecord, AddressOf LISParser_OnReceivedRecord
                 Catch ex As Exception
+                    InterfaceUI.ButtonStartServer.Enabled = True
                     RaiseEvent PushingLogs(ex.Message, EventLogEntryType.Error)
                     log.Error(ex)
                 End Try
@@ -183,9 +185,11 @@ Public Class Connection
         Next
         Dim tr = New TerminatorRecord()
         lisRecordList.Add(tr)
+        InterfaceUI.ButtonSendData.Enabled = True
         Try
             _lisParser.SendRecords(lisRecordList)
         Catch ex As Exception
+            InterfaceUI.ButtonSendData.Enabled = True
             RaiseEvent PushingLogs(ex.Message, LogItem.LogType.Exception)
         End Try
     End Sub

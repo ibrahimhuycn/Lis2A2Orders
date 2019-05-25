@@ -9,7 +9,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="IPAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.1.10</Value>
+      <Value Profile="(Default)">10.0.110.34</Value>
     </Setting>
     <Setting Name="Port" Type="System.String" Scope="User">
       <Value Profile="(Default)">40001</Value>
@@ -27,10 +27,10 @@
       <Value Profile="(Default)">Ethernet</Value>
     </Setting>
     <Setting Name="ParametersCHM" Type="System.String" Scope="User">
-      <Value Profile="(Default)">URO|BLD|BIL|KET|GLU|PRO|PH|NIT|LEU|S.G.(Ref)|COLOR|ColorRANK|CLOUD</Value>
+      <Value Profile="(Default)">URO\^^^BLD\^^^BIL\^^^KET\^^^GLU\^^^PRO\^^^PH\^^^NIT\^^^LEU\^^^S.G.(Ref)\^^^COLOR\^^^ColorRANK\^^^CLOUD\</Value>
     </Setting>
     <Setting Name="ParametersFCM" Type="System.String" Scope="User">
-      <Value Profile="(Default)">RBC|WBC|WBC Clumps|EC|Squa.EC|Non SEC|CAST|Hy.CAST|Path.CAST|BACT|X'TAL|YLC|SPERM|MUCUS</Value>
+      <Value Profile="(Default)">RBC\^^^WBC\^^^WBC Clumps\^^^EC\^^^Squa.EC\^^^Non SEC\^^^CAST\^^^Hy.CAST\^^^Path.CAST\^^^BACT\^^^X'TAL\^^^YLC\^^^SPERM\^^^MUCUS\</Value>
     </Setting>
     <Setting Name="AnalysisCategories" Type="System.String" Scope="User">
       <Value Profile="(Default)">CHM</Value>
@@ -48,7 +48,7 @@
       <Value Profile="(Default)">ALL</Value>
     </Setting>
     <Setting Name="ParametersAll" Type="System.String" Scope="User">
-      <Value Profile="(Default)">URO|BLD|BIL|KET|GLU|PRO|PH|NIT|LEU|S.G.(Ref)|COLOR|ColorRANK|CLOUD|RBC|WBC|WBC Clumps|EC|Squa.EC|Non SEC|CAST|Hy.CAST|Path.CAST|BACT|X'TAL|YLC|SPERM|MUCUS</Value>
+      <Value Profile="(Default)">URO\^^^BLD\^^^BIL\^^^KET\^^^GLU\^^^PRO\^^^PH\^^^NIT\^^^LEU\^^^S.G.(Ref)\^^^COLOR\^^^ColorRANK\^^^CLOUD\^^^RBC\^^^WBC\^^^WBC Clumps\^^^EC\^^^Squa.EC\^^^Non SEC\^^^CAST\^^^Hy.CAST\^^^Path.CAST\^^^BACT\^^^X'TAL\^^^YLC\^^^SPERM\^^^MUCUS\</Value>
     </Setting>
     <Setting Name="ConnectionString" Type="System.String" Scope="User">
       <Value Profile="(Default)">Server=SERVER;Database=DATABASE;User Id=USERNAME;Password=PASSWORD;</Value>
@@ -70,6 +70,9 @@
     </Setting>
     <Setting Name="OrdersFilePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LisQueryIntervalMinutes" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">15</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -56,7 +56,7 @@
     </Reference>
     <Reference Include="E1394-91, Version=5.2.0.34, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>J:\standardengineering-lis-6942c1ddaaf3\LIS02A2\bin\Release\E1394-91.dll</HintPath>
+      <HintPath>C:\Users\34314\Downloads\OneDrive-2019-05-24\E1394-91.dll</HintPath>
     </Reference>
     <Reference Include="LIS01A2, Version=4.1.0.31, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESSY.LIS.LIS01-A2.4.2.0\lib\net46\LIS01A2.dll</HintPath>
@@ -123,16 +123,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Records\AbstractLisRecordV1.vb" />
-    <Compile Include="Records\AbstractLisSubRecordV1.vb" />
-    <Compile Include="Records\DateTimeUsage.vb" />
-    <Compile Include="Records\DateTimeUsageAttribute.vb" />
-    <Compile Include="Records\LisEnumAttribute.vb" />
-    <Compile Include="Records\LISExtensions.vb" />
-    <Compile Include="Records\LisRecordFieldAttribute.vb" />
-    <Compile Include="Records\LisRecordRemainingFieldsAttribute.vb" />
-    <Compile Include="Records\OrderInformationRecord.vb" />
-    <Compile Include="Records\RecordFields.vb" />
     <Compile Include="SampleData\Patient.vb" />
     <Compile Include="SampleData\Request.vb" />
     <Compile Include="SampleData\Sample.vb" />

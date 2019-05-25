@@ -121,7 +121,7 @@
   <data name="ButtonSettings.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wwAADsMBx2+oZAAAAVdJREFUOE+F088rRUEYxvFBFJciRXJlgWQlCz9KsRKl/AUiYYFQClHCykpZKRbs
+        wgAADsIBFShKgAAAAVdJREFUOE+F088rRUEYxvFBFJciRXJlgWQlCz9KsRKl/AUiYYFQClHCykpZKRbs
         pGxkoSxEslVKsZAkC3+AUAjf55r3qnvOuZ76NJ2ZO3Nn3jPHpUmWb1MT1Z9ME5awgUmUQcnEMDbRoI6w
         9OIS33jGBWaRiwU8YQKh6cA9NFkWUYByxHGDc+TDEvOtq8IqPmELDMFSgTtoVyMogY7ZA9eKK7zDJp9g
         GtVQ5mBjL9Axj1GDxBa3ocFbzGAKOs4h2jCGB+iP9rGGFiRTCS2iCudBi+7AdtOOTjQjBxkIpBilyIbe
@@ -133,7 +133,7 @@
   <data name="ButtonSendData.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EwAACxMBAJqcGAAAAAd0SU1FB+IMDw8SGoQBI+oAAAFjSURBVDhPlZKxTsJgFIWJmji4OhuHLsY4QQwp
+        EgAACxIB0t1+/AAAAAd0SU1FB+IMDw8SGoQBI+oAAAFjSURBVDhPlZKxTsJgFIWJmji4OhuHLsY4QQwp
         hTLYEBrapVKWOkjcTYgDxGjjCzi4uLOgg76DJuiED6APgDoB+gB+11wWA7Se5KT/T8+59/ReMv+Bbdsr
         ekxGpVLZxLBfLpePC4VCx7KsuFgsHhmGsaqSxahWqzulUukajuBYSJH71AUEdG9hHJJkBKVIL3UBDIfw
         FU6mCeBlHMdLKpkPMdP9Tc0T5tHj3jVN81Ql8/G3s+/7twfAdd0ol8uZKpsNpr2N8WXaGfNNGIYd7g+e
@@ -142,13 +142,10 @@
         gxnsYuhivmKlZ7DNOSTJmkqSIWuSdeo1AZnMD5jHkEoCblbRAAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="DataGridViewDisplayLogs.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <data name="ButtonSocketStatus.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EwAACxMBAJqcGAAAAAd0SU1FB+IMFxIFFZBu9b4AAAEQSURBVDhPpVM7bsJAFNyOiH3UlBQpEKegpEyZ
+        EgAACxIB0t1+/AAAAAd0SU1FB+IMFxIFFZBu9b4AAAEQSURBVDhPpVM7bsJAFNyOiH3UlBQpEKegpEyZ
         kmOktMSuKxpukGNQUlD4ABSUbiJxBMrwZvZZMfKaWPJII6+fdub9bDcepZ/3chCC/3TRX7uUi/LLbv2D
         KIXy9sRy9qvPu/LPZO+8nTKI0w25my1JmLZNwttCn3sXpltTtIB+oxxdkIriBlFONAnyo+eDGdZdk2Rw
         sQsFY00FjOlMICrl2wyr7pBRJspNJikz5+HPdj4qPyx2zW+pbUIRxLJmZpTOOb0yADgw9IxLMELZasJN
@@ -157,15 +154,6 @@
 </value>
   </data>
   <metadata name="DataGridViewDisplayLogs.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColSerial.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColDate.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="ColLogMessage.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="ColSerial.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

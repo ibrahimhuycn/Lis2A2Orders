@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -80,7 +80,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("192.168.1.10")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("10.0.110.34")>  _
         Public Property IPAddress() As String
             Get
                 Return CType(Me("IPAddress"),String)
@@ -149,7 +149,8 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("URO|BLD|BIL|KET|GLU|PRO|PH|NIT|LEU|S.G.(Ref)|COLOR|ColorRANK|CLOUD")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("URO\^^^BLD\^^^BIL\^^^KET\^^^GLU\^^^PRO\^^^PH\^^^NIT\^^^LEU\^^^S.G.(Ref)\^^^COLOR\"& _ 
+            "^^^ColorRANK\^^^CLOUD\")>  _
         Public Property ParametersCHM() As String
             Get
                 Return CType(Me("ParametersCHM"),String)
@@ -161,8 +162,8 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("RBC|WBC|WBC Clumps|EC|Squa.EC|Non SEC|CAST|Hy.CAST|Path.CAST|BACT|X'TAL|YLC|SPERM"& _ 
-            "|MUCUS")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("RBC\^^^WBC\^^^WBC Clumps\^^^EC\^^^Squa.EC\^^^Non SEC\^^^CAST\^^^Hy.CAST\^^^Path.C"& _ 
+            "AST\^^^BACT\^^^X'TAL\^^^YLC\^^^SPERM\^^^MUCUS\")>  _
         Public Property ParametersFCM() As String
             Get
                 Return CType(Me("ParametersFCM"),String)
@@ -234,8 +235,9 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("URO|BLD|BIL|KET|GLU|PRO|PH|NIT|LEU|S.G.(Ref)|COLOR|ColorRANK|CLOUD|RBC|WBC|WBC Cl"& _ 
-            "umps|EC|Squa.EC|Non SEC|CAST|Hy.CAST|Path.CAST|BACT|X'TAL|YLC|SPERM|MUCUS")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("URO\^^^BLD\^^^BIL\^^^KET\^^^GLU\^^^PRO\^^^PH\^^^NIT\^^^LEU\^^^S.G.(Ref)\^^^COLOR\"& _ 
+            "^^^ColorRANK\^^^CLOUD\^^^RBC\^^^WBC\^^^WBC Clumps\^^^EC\^^^Squa.EC\^^^Non SEC\^^"& _ 
+            "^CAST\^^^Hy.CAST\^^^Path.CAST\^^^BACT\^^^X'TAL\^^^YLC\^^^SPERM\^^^MUCUS\")>  _
         Public Property ParametersAll() As String
             Get
                 Return CType(Me("ParametersAll"),String)
@@ -326,6 +328,18 @@ Namespace My
             End Get
             Set
                 Me("OrdersFilePath") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("15")>  _
+        Public Property LisQueryIntervalMinutes() As Integer
+            Get
+                Return CType(Me("LisQueryIntervalMinutes"),Integer)
+            End Get
+            Set
+                Me("LisQueryIntervalMinutes") = value
             End Set
         End Property
     End Class

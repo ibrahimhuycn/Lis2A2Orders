@@ -58,6 +58,7 @@ Partial Class InterfaceUI
         Me.ToolStripMenuItemSendOrders = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.OrdersFileDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.CheckBoxQueryStatus = New System.Windows.Forms.CheckBox()
         Me.TabControlOrders.SuspendLayout()
         Me.TabPageDetails.SuspendLayout()
         Me.GroupBoxOrderTransmission.SuspendLayout()
@@ -82,6 +83,7 @@ Partial Class InterfaceUI
         '
         'TabPageDetails
         '
+        Me.TabPageDetails.Controls.Add(Me.CheckBoxQueryStatus)
         Me.TabPageDetails.Controls.Add(Me.ButtonSettings)
         Me.TabPageDetails.Controls.Add(Me.ButtonSendData)
         Me.TabPageDetails.Controls.Add(Me.ButtonStartServer)
@@ -102,7 +104,7 @@ Partial Class InterfaceUI
         'ButtonSettings
         '
         Me.ButtonSettings.Image = CType(resources.GetObject("ButtonSettings.Image"), System.Drawing.Image)
-        Me.ButtonSettings.Location = New System.Drawing.Point(390, 26)
+        Me.ButtonSettings.Location = New System.Drawing.Point(330, 27)
         Me.ButtonSettings.Name = "ButtonSettings"
         Me.ButtonSettings.Size = New System.Drawing.Size(22, 23)
         Me.ButtonSettings.TabIndex = 21
@@ -111,7 +113,7 @@ Partial Class InterfaceUI
         'ButtonSendData
         '
         Me.ButtonSendData.Image = CType(resources.GetObject("ButtonSendData.Image"), System.Drawing.Image)
-        Me.ButtonSendData.Location = New System.Drawing.Point(306, 27)
+        Me.ButtonSendData.Location = New System.Drawing.Point(302, 27)
         Me.ButtonSendData.Name = "ButtonSendData"
         Me.ButtonSendData.Size = New System.Drawing.Size(22, 23)
         Me.ButtonSendData.TabIndex = 19
@@ -119,9 +121,9 @@ Partial Class InterfaceUI
         '
         'ButtonStartServer
         '
-        Me.ButtonStartServer.Location = New System.Drawing.Point(133, 3)
+        Me.ButtonStartServer.Location = New System.Drawing.Point(272, 0)
         Me.ButtonStartServer.Name = "ButtonStartServer"
-        Me.ButtonStartServer.Size = New System.Drawing.Size(82, 23)
+        Me.ButtonStartServer.Size = New System.Drawing.Size(80, 23)
         Me.ButtonStartServer.TabIndex = 18
         Me.ButtonStartServer.Text = "Start Server"
         Me.ButtonStartServer.UseVisualStyleBackColor = True
@@ -297,7 +299,7 @@ Partial Class InterfaceUI
         'ButtonSelectOrdersFile
         '
         Me.ButtonSelectOrdersFile.Image = Global.Lis2A2Orders.My.Resources.Resources.Browseicon_16x16
-        Me.ButtonSelectOrdersFile.Location = New System.Drawing.Point(282, 27)
+        Me.ButtonSelectOrdersFile.Location = New System.Drawing.Point(272, 27)
         Me.ButtonSelectOrdersFile.Name = "ButtonSelectOrdersFile"
         Me.ButtonSelectOrdersFile.Size = New System.Drawing.Size(22, 23)
         Me.ButtonSelectOrdersFile.TabIndex = 11
@@ -318,7 +320,7 @@ Partial Class InterfaceUI
         Me.TextBoxOrdersPath.Font = New System.Drawing.Font("Cambria", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TextBoxOrdersPath.Location = New System.Drawing.Point(13, 27)
         Me.TextBoxOrdersPath.Name = "TextBoxOrdersPath"
-        Me.TextBoxOrdersPath.Size = New System.Drawing.Size(266, 22)
+        Me.TextBoxOrdersPath.Size = New System.Drawing.Size(251, 22)
         Me.TextBoxOrdersPath.TabIndex = 9
         '
         'TabPageLogs
@@ -398,6 +400,18 @@ Partial Class InterfaceUI
         '
         Me.OrdersFileDialog.FileName = "Orders"
         '
+        'CheckBoxQueryStatus
+        '
+        Me.CheckBoxQueryStatus.AutoSize = True
+        Me.CheckBoxQueryStatus.Checked = True
+        Me.CheckBoxQueryStatus.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBoxQueryStatus.Location = New System.Drawing.Point(187, 3)
+        Me.CheckBoxQueryStatus.Name = "CheckBoxQueryStatus"
+        Me.CheckBoxQueryStatus.Size = New System.Drawing.Size(77, 18)
+        Me.CheckBoxQueryStatus.TabIndex = 22
+        Me.CheckBoxQueryStatus.Text = "Query ON"
+        Me.CheckBoxQueryStatus.UseVisualStyleBackColor = True
+        '
         'InterfaceUI
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -458,4 +472,5 @@ Partial Class InterfaceUI
     Friend WithEvents ButtonSocketStatus As Button
     Friend WithEvents LabelModeIndicator As Label
     Friend WithEvents ButtonSettings As Button
+    Friend WithEvents CheckBoxQueryStatus As CheckBox
 End Class
