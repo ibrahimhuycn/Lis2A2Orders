@@ -147,7 +147,8 @@ Public Class Connection
                 .LaboratoryAssignedPatientID = request.Patient.PatientID,
                 .PatientName = request.Patient.PatientName,
                 .Birthdate = request.Patient.BirthDate,
-                .PatientSex = request.Patient.PatientSex}
+                .PatientSex = request.Patient.PatientSex,
+                .AdmissionStatus = AdmissionStatus.OutPatient}
 
             lisRecordList.Add(Patient)
 
@@ -164,9 +165,15 @@ Public Class Connection
                     .ActionCode = request.TestActionCode,
                     .Priority = request.Priority,
                     .ReportType = request.ReportType,
-                    .RequestedDateTime = request.SampleCollectionTime,
+                    .RequestedDateTime = Nothing,
                     .SpecimenID = request.Specimen.SpecimenID,
-                    .TestID = New UniversalTestID() With {.ManufacturerCode = param}}
+                    .TestID = New UniversalTestID() With {.ManufacturerCode = param},
+                    .SpecimenCollectionDateTime = request.SampleCollectionTime,
+                    .OrderingPhysician = "D1^D^A^^^Dr.",
+                    .PhysicianTelephoneNumber = "01-123-4567",
+                    .UserFieldNumber1 = Now.ToString("HHmmssfff"),
+                    .LocationSpecimenCollection = "W1^E^04-5678-0123",
+                    .SpecimenInstitution = "C^U"}  'OrderNumber a SubString of Time
 
 
                 lisRecordList.Add(Orders)

@@ -55,7 +55,8 @@
       <HintPath>..\packages\Dapper.1.60.6\lib\net451\Dapper.dll</HintPath>
     </Reference>
     <Reference Include="E1394-91, Version=5.2.0.34, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Essy.LIS.LIS02A2.5.2.0\lib\net46\E1394-91.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>J:\standardengineering-lis-6942c1ddaaf3\LIS02A2\bin\Release\E1394-91.dll</HintPath>
     </Reference>
     <Reference Include="LIS01A2, Version=4.1.0.31, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESSY.LIS.LIS01-A2.4.2.0\lib\net46\LIS01A2.dll</HintPath>

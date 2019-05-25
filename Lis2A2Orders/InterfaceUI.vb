@@ -53,7 +53,7 @@ Public Class InterfaceUI
 
     Private Sub PrepInitiateNewRequest()
 
-        Dim Data As IEnumerable(Of LisRequestData) = LisEnquiry.GetData(Now.ToString("yyyy/MM/dd") & " 13:30:000")
+        Dim Data As IEnumerable(Of LisRequestData) = LisEnquiry.GetData(Now.ToString("yyyy/MM/dd") & " 13:30:00.000")
         If Not Data.Count = 0 Then
             Dim LastSampleTime = Data(Data.Count - 1).created_at
             My.Settings.LastSampleTime = LastSampleTime.ToString("yyyy/MMM/dd HH:mm:ss.fff")
@@ -88,7 +88,6 @@ Public Class InterfaceUI
                                                             .BirthDate = d.DateOfBirth,
                                                             .PatientSex = Sex,
                                                             .PatientName = New PatientName With {.LastName = LastName, .FirstName = FirstName}},
-                                              .OrderNumber = Now.ToString("mm:ss.fff"),
                                               .Specimen = New Sample With {.SpecimenID = d.Barcode},
                                               .RequestedTests = RequestedTestsList})
                 Next
