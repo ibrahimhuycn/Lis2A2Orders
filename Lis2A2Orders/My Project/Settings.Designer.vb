@@ -68,7 +68,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
         Public Property IsServer() As Boolean
             Get
                 Return CType(Me("IsServer"),Boolean)
@@ -80,7 +80,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("192.168.1.10")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("10.0.110.168")>  _
         Public Property IPAddress() As String
             Get
                 Return CType(Me("IPAddress"),String)
@@ -223,7 +223,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("ALL")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("CHM")>  _
         Public Property ActiveTestOrders() As String
             Get
                 Return CType(Me("ActiveTestOrders"),String)

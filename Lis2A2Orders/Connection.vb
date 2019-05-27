@@ -172,8 +172,8 @@ Public Class Connection
                     .OrderingPhysician = "D1^D^A^^^Dr.",
                     .PhysicianTelephoneNumber = "01-123-4567",
                     .UserFieldNumber1 = Now.ToString("HHmmssfff"),
-                    .LocationSpecimenCollection = "W1^E^04-5678-0123",
-                    .SpecimenInstitution = "C^U"}  'OrderNumber a SubString of Time
+                    .LocationSpecimenCollection = "OPD^E^C.PATH-5678-0123",
+                    .SpecimenInstitution = "C. Path^Clinical Pathology"}  'OrderNumber a SubString of Time
 
 
                 lisRecordList.Add(Orders)

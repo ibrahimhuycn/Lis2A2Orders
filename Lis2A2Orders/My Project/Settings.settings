@@ -6,10 +6,10 @@
       <Value Profile="(Default)">U-WAM Order Server</Value>
     </Setting>
     <Setting Name="IsServer" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="IPAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.1.10</Value>
+      <Value Profile="(Default)">10.0.110.168</Value>
     </Setting>
     <Setting Name="Port" Type="System.String" Scope="User">
       <Value Profile="(Default)">40001</Value>
@@ -45,7 +45,7 @@
       <Value Profile="(Default)">.ok</Value>
     </Setting>
     <Setting Name="ActiveTestOrders" Type="System.String" Scope="User">
-      <Value Profile="(Default)">ALL</Value>
+      <Value Profile="(Default)">CHM</Value>
     </Setting>
     <Setting Name="ParametersAll" Type="System.String" Scope="User">
       <Value Profile="(Default)">URO\^^^BLD\^^^BIL\^^^KET\^^^GLU\^^^PRO\^^^PH\^^^NIT\^^^LEU\^^^S.G.(Ref)\^^^COLOR\^^^ColorRANK\^^^CLOUD\^^^RBC\^^^WBC\^^^WBC Clumps\^^^EC\^^^Squa.EC\^^^Non SEC\^^^CAST\^^^Hy.CAST\^^^Path.CAST\^^^BACT\^^^X'TAL\^^^YLC\^^^SPERM\^^^MUCUS\</Value>
