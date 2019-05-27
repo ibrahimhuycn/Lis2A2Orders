@@ -17,6 +17,7 @@ Public Class InterfaceUI
     Dim AppSettings As Settings
     Dim DisplaySeq As Integer = 0
     Dim _astmConnection As Connection
+    Public FetchWithTime As String
 
     Private Sub UpdateLabel(label As Label, ByVal content As String)
         If label.InvokeRequired Then
@@ -60,17 +61,14 @@ Public Class InterfaceUI
 
     Private Sub PrepInitiateNewRequest()
         ButtonSendData.Enabled = False
-        Dim FetchWithTime As String
-        If Not My.Settings.LastSampleTime = Nothing Then
-            FetchWithTime = My.Settings.LastSampleTime
-        Else
+        If FetchWithTime = Nothing Then
             FetchWithTime = Now.ToString("yyyy/MM/dd" & " 00:00:00.000")
         End If
 
         Dim Data As IEnumerable(Of LisRequestData) = LisEnquiry.GetData(FetchWithTime)
         If Not Data.Count = 0 Then
             Dim LastSampleTime = Data(Data.Count - 1).created_at
-            My.Settings.LastSampleTime = LastSampleTime.ToString("yyyy/MM/dd HH:mm:ss.fff")
+            FetchWithTime = LastSampleTime.ToString("yyyy/MM/dd HH:mm:ss.fff")
             Try
                 Dim Requests As New RequestDataEventArgs
                 Requests.RequestData.Clear()
