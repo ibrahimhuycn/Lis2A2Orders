@@ -149,7 +149,8 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("URO|BLD|BIL|KET|GLU|PRO|PH|NIT|LEU|S.G.(Ref)|COLOR|ColorRANK|CLOUD")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("URO\^^^BLD\^^^BIL\^^^KET\^^^GLU\^^^PRO\^^^PH\^^^NIT\^^^LEU\^^^S.G.(Ref)\^^^COLOR\"& _ 
+            "^^^ColorRANK\^^^CLOUD\")>  _
         Public Property ParametersCHM() As String
             Get
                 Return CType(Me("ParametersCHM"),String)
@@ -161,8 +162,8 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("RBC|WBC|WBC Clumps|EC|Squa.EC|Non SEC|CAST|Hy.CAST|Path.CAST|BACT|X'TAL|YLC|SPERM"& _ 
-            "|MUCUS")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("RBC\^^^WBC\^^^WBC Clumps\^^^EC\^^^Squa.EC\^^^Non SEC\^^^CAST\^^^Hy.CAST\^^^Path.C"& _ 
+            "AST\^^^BACT\^^^X'TAL\^^^YLC\^^^SPERM\^^^MUCUS\")>  _
         Public Property ParametersFCM() As String
             Get
                 Return CType(Me("ParametersFCM"),String)
@@ -174,7 +175,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("CHM")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("ALL")>  _
         Public Property AnalysisCategories() As String
             Get
                 Return CType(Me("AnalysisCategories"),String)
@@ -234,8 +235,9 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("URO|BLD|BIL|KET|GLU|PRO|PH|NIT|LEU|S.G.(Ref)|COLOR|ColorRANK|CLOUD|RBC|WBC|WBC Cl"& _ 
-            "umps|EC|Squa.EC|Non SEC|CAST|Hy.CAST|Path.CAST|BACT|X'TAL|YLC|SPERM|MUCUS")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("URO\^^^BLD\^^^BIL\^^^KET\^^^GLU\^^^PRO\^^^PH\^^^NIT\^^^LEU\^^^S.G.(Ref)\^^^COLOR\"& _ 
+            "^^^ColorRANK\^^^CLOUD\^^^RBC\^^^WBC\^^^WBC Clumps\^^^EC\^^^Squa.EC\^^^Non SEC\^^"& _ 
+            "^CAST\^^^Hy.CAST\^^^Path.CAST\^^^BACT\^^^X'TAL\^^^YLC\^^^SPERM\^^^MUCUS\")>  _
         Public Property ParametersAll() As String
             Get
                 Return CType(Me("ParametersAll"),String)
