@@ -59,7 +59,8 @@
       <HintPath>C:\Users\34314\Downloads\OneDrive-2019-05-24\E1394-91.dll</HintPath>
     </Reference>
     <Reference Include="LIS01A2, Version=4.1.0.31, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ESSY.LIS.LIS01-A2.4.2.0\lib\net46\LIS01A2.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\Patched\LIS01A2.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
