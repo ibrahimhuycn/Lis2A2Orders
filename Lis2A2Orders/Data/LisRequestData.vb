@@ -1,4 +1,4 @@
-﻿Public Class LisRequestData
+﻿Public Class LisRequestDataModel
     Public Property PatientNo As Integer
     Public Property Barcode As String
     Public Property created_at As DateTime

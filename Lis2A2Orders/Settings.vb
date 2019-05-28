@@ -4,6 +4,7 @@
     Private _isServer As Boolean
     Private _tabPage2Name As String
     Private _LastSampleTime As String
+    Dim _ActiveTestOrders As String
 
     Public Sub New()
         ChemistryParameters = My.Settings.ParametersCHM.Split("|")
@@ -11,9 +12,9 @@
     End Sub
 
     Private Enum AnalysisCategories
-        Both
-        Chemistry
-        Deposit
+        ALL
+        CHM
+        FCM
     End Enum
 
     Private Enum ConnType
@@ -49,20 +50,20 @@
         End Set
     End Property
 
-    Public Property AnalysisCategory As String
+    Public Property ActiveTestOrders As String
         Get
-            Return _AnalysisCategory
+            Return _ActiveTestOrders
         End Get
         Set
             Select Case Value
-                Case AnalysisCategories.Both
-                    AnalysisCategories.Both.ToString()
+                Case AnalysisCategories.ALL
+                    AnalysisCategories.ALL.ToString()
 
-                Case AnalysisCategories.Chemistry
-                    AnalysisCategories.Chemistry.ToString()
+                Case AnalysisCategories.CHM
+                    AnalysisCategories.CHM.ToString()
 
-                Case AnalysisCategories.Deposit
-                    AnalysisCategories.Deposit.ToString()
+                Case AnalysisCategories.FCM
+                    AnalysisCategories.FCM.ToString()
             End Select
         End Set
     End Property
@@ -91,9 +92,6 @@
     Public Property OrdersFileCheckIndicatorExtension As String
     Public Property OrdersFileExtension As String
     Public Property OrdersFilePrefix As String
-    Public Property ActiveTestOrders As String
-
-
     Public Shared Sub SaveSettings(ByVal newSettings As Settings, ByVal parametersCHM As String, ByVal parametersFCM As String)
         Try
             If newSettings IsNot Nothing Then
@@ -114,8 +112,7 @@
 
 
 
-                Dim saves As New My.MySettings With {.AnalysisCategories = newSettings.AnalysisCategory,
-                    .AppName = newSettings.AppName,
+                Dim saves As New My.MySettings With {.AppName = newSettings.AppName,
                     .EthernetOrSerial = EthernetOrSerial,
                     .IPAddress = newSettings.IPAddress,
                     .IsServer = newSettings.IsServer,

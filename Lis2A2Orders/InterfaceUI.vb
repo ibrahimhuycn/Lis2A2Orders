@@ -8,6 +8,7 @@ Imports System.Reflection
 Public Class InterfaceUI
     Private Shared ReadOnly log As log4net.ILog = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType)
     Dim WithEvents LisQueryInit As Timer = New Timer With {.Enabled = False, .Interval = My.Settings.LisQueryIntervalMinutes * 1000}
+    Dim WithEvents DataTransmitInit As Timer = New Timer With {.Enabled = False, .Interval = 100}
     Private Event RequireLogsDisplay(ByVal logMessage As String, ByVal logType As LogItem.LogType)
     Private Event OnAppSettingsRefreshed(ByVal settings As Settings)
     Private Event OnRefreshAppSettings()
@@ -38,37 +39,60 @@ Public Class InterfaceUI
     Public Sub New()
         InitializeComponent()
         LisQueryInit.Enabled = True
+        DataTransmitInit.Enabled = True
         'Setting up method name for logging.
         Dim myName As String = MethodBase.GetCurrentMethod().Name
         DisplayLogItem("Sub: [" & myName & "]- Initializing...", LogItem.LogType.Information)
 
         RaiseEvent OnRefreshAppSettings()
         _astmConnection = New Connection(AppSettings)
-        AddHandler LisQueryInit.Tick, AddressOf InitiateIfConnected
+        AddHandler LisQueryInit.Tick, AddressOf QueryLisServer
+        AddHandler DataTransmitInit.Tick, AddressOf PrepTransmissionToAnalyser
         AddHandler Me.RequireLogsDisplay, AddressOf DisplayLogItem
         AddHandler Connection.PushingLogs, AddressOf DisplayLogItem
         AddHandler Connection.ReceivedHeader, AddressOf UpdateUIBasedOnHeader
         AddHandler Connection.ReportProgress, AddressOf ProgressDisplayUI
         AddHandler ButtonStartServer.Click, AddressOf _astmConnection.InitializeConnection
-        AddHandler ButtonSendData.Click, AddressOf PrepInitiateNewRequest
+        AddHandler ButtonSendData.Click, AddressOf PrepTransmissionToAnalyser
     End Sub
 
-    Private Sub InitiateIfConnected(sender As Object, e As EventArgs)
+    Private Sub QueryLisServer(sender As Object, e As EventArgs)
         If ButtonStartServer.Enabled = False Then
-            PrepInitiateNewRequest()
+            ButtonSendData.Enabled = False
+            If FetchWithTime = Nothing Then
+                FetchWithTime = Now.ToString("yyyy/MM/dd" & " 00:00:00.000")
+            End If
+
+            Try
+                Dim Data As IList(Of LisRequestDataModel) = LisEnquiry.GetData(FetchWithTime).ToList
+                FetchWithTime = Data(Data.Count - 1).created_at.ToString("yyyy/MM/dd HH:mm:ss.fff")
+                ButtonSendData.Enabled = True
+                SqliteDataAccess.SaveRequest(Data)
+            Catch ex As Exception
+                ButtonSendData.Enabled = True
+                RaiseEvent RequireLogsDisplay(ex.Message, LogItem.LogType.Exception)
+            End Try
         End If
     End Sub
-
-    Private Sub PrepInitiateNewRequest()
-        ButtonSendData.Enabled = False
-        If FetchWithTime = Nothing Then
-            FetchWithTime = Now.ToString("yyyy/MM/dd" & " 00:00:00.000")
+    Private Function QueryLocalDB() As List(Of LisRequestDataModel)
+        Try
+            Dim Data As List(Of LisRequestDataModel) = SqliteDataAccess.LoadOneRequests()
+            Return Data
+        Catch ex As Exception
+            RaiseEvent RequireLogsDisplay(ex.Message, LogItem.LogType.Exception)
+            Return New List(Of LisRequestDataModel)
+        End Try
+    End Function
+    Private Sub PrepTransmissionToAnalyser(sender As Object, e As EventArgs)
+        DataTransmitInit.Enabled = False
+        If ButtonStartServer.Enabled = True Then
+            DataTransmitInit.Enabled = True
+            Exit Sub
         End If
+        Dim Data = QueryLocalDB()
 
-        Dim Data As IEnumerable(Of LisRequestData) = LisEnquiry.GetData(FetchWithTime)
         If Not Data.Count = 0 Then
-            Dim LastSampleTime = Data(Data.Count - 1).created_at
-            FetchWithTime = LastSampleTime.ToString("yyyy/MM/dd HH:mm:ss.fff")
+
             Try
                 Dim Requests As New RequestDataEventArgs
                 Requests.RequestData.Clear()
@@ -106,10 +130,10 @@ Public Class InterfaceUI
 
                 _astmConnection.PrepAndSendData(Requests)
             Catch ex As Exception
-                ButtonSendData.Enabled = True
+                RaiseEvent RequireLogsDisplay(ex.Message, LogItem.LogType.Exception)
             End Try
         End If
-
+        DataTransmitInit.Enabled = True
     End Sub
 
     Private Sub ProgressDisplayUI(progress As Double)

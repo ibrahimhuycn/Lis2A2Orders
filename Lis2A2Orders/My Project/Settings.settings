@@ -9,7 +9,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="IPAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">10.0.110.34</Value>
+      <Value Profile="(Default)">192.168.1.9</Value>
     </Setting>
     <Setting Name="Port" Type="System.String" Scope="User">
       <Value Profile="(Default)">40001</Value>
@@ -31,9 +31,6 @@
     </Setting>
     <Setting Name="ParametersFCM" Type="System.String" Scope="User">
       <Value Profile="(Default)">RBC\^^^WBC\^^^WBC Clumps\^^^EC\^^^Squa.EC\^^^Non SEC\^^^CAST\^^^Hy.CAST\^^^Path.CAST\^^^BACT\^^^X'TAL\^^^YLC\^^^SPERM\^^^MUCUS\</Value>
-    </Setting>
-    <Setting Name="AnalysisCategories" Type="System.String" Scope="User">
-      <Value Profile="(Default)">CHM</Value>
     </Setting>
     <Setting Name="OrdersFilePrefix" Type="System.String" Scope="User">
       <Value Profile="(Default)">ORD</Value>

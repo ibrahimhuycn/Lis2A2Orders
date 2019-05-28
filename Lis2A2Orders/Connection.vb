@@ -90,7 +90,7 @@ Public Class Connection
     End Enum
 
     Private Sub LISParser_OnReceivedRecord(ByVal Sender As Object, ByVal e As ReceiveRecordEventArgs)
-        Dim record As Essy.Lis.LIS02A2.AbstractLisRecord = e.ReceivedRecord
+        Dim record As AbstractLisRecord = e.ReceivedRecord
         RaiseEvent PushingLogs(record.ToLISString, LogItem.LogType.Received)
         RaiseEvent PushingLogs(record.GetType.ToString, LogItem.LogType.Information)
 
@@ -188,8 +188,10 @@ Public Class Connection
         InterfaceUI.ButtonSendData.Enabled = True
         Try
             _lisParser.SendRecords(lisRecordList)
+            For Each request In e.RequestData
+                SqliteDataAccess.DeleteRequest(request.Specimen.SpecimenID)
+            Next
         Catch ex As Exception
-            InterfaceUI.ButtonSendData.Enabled = True
             RaiseEvent PushingLogs(ex.Message, LogItem.LogType.Exception)
         End Try
     End Sub
