@@ -7,6 +7,7 @@ Imports System.Reflection
 
 Public Class InterfaceUI
     Private Shared ReadOnly log As log4net.ILog = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType)
+    Dim WithEvents LisQueryInit As Timer = New Timer With {.Enabled = False, .Interval = My.Settings.LisQueryIntervalMinutes * 1000}
     Private Event RequireLogsDisplay(ByVal logMessage As String, ByVal logType As LogItem.LogType)
     Private Event OnAppSettingsRefreshed(ByVal settings As Settings)
     Private Event OnRefreshAppSettings()
@@ -35,14 +36,14 @@ Public Class InterfaceUI
 
     Public Sub New()
         InitializeComponent()
-
+        LisQueryInit.Enabled = True
         'Setting up method name for logging.
         Dim myName As String = MethodBase.GetCurrentMethod().Name
         DisplayLogItem("Sub: [" & myName & "]- Initializing...", LogItem.LogType.Information)
 
         RaiseEvent OnRefreshAppSettings()
         _astmConnection = New Connection(AppSettings)
-
+        AddHandler LisQueryInit.Tick, AddressOf InitiateIfConnected
         AddHandler Me.RequireLogsDisplay, AddressOf DisplayLogItem
         AddHandler Connection.PushingLogs, AddressOf DisplayLogItem
         AddHandler Connection.ReceivedHeader, AddressOf UpdateUIBasedOnHeader
@@ -51,12 +52,25 @@ Public Class InterfaceUI
         AddHandler ButtonSendData.Click, AddressOf PrepInitiateNewRequest
     End Sub
 
-    Private Sub PrepInitiateNewRequest()
+    Private Sub InitiateIfConnected(sender As Object, e As EventArgs)
+        If ButtonStartServer.Enabled = False Then
+            PrepInitiateNewRequest()
+        End If
+    End Sub
 
-        Dim Data As IEnumerable(Of LisRequestData) = LisEnquiry.GetData(Now.ToString("yyyy/MM/dd") & " 13:30:00.000")
+    Private Sub PrepInitiateNewRequest()
+        ButtonSendData.Enabled = False
+        Dim FetchWithTime As String
+        If Not My.Settings.LastSampleTime = Nothing Then
+            FetchWithTime = My.Settings.LastSampleTime
+        Else
+            FetchWithTime = Now.ToString("yyyy/MM/dd" & " 00:00:00.000")
+        End If
+
+        Dim Data As IEnumerable(Of LisRequestData) = LisEnquiry.GetData(FetchWithTime)
         If Not Data.Count = 0 Then
             Dim LastSampleTime = Data(Data.Count - 1).created_at
-            My.Settings.LastSampleTime = LastSampleTime.ToString("yyyy/MMM/dd HH:mm:ss.fff")
+            My.Settings.LastSampleTime = LastSampleTime.ToString("yyyy/MM/dd HH:mm:ss.fff")
             Try
                 Dim Requests As New RequestDataEventArgs
                 Requests.RequestData.Clear()
@@ -82,7 +96,7 @@ Public Class InterfaceUI
                     Next
 
                     'Note Action code will be set during transmission
-                    Requests.RequestData.Add(New Request With {.Priority = OrderPriority.Stat,
+                    Requests.RequestData.Add(New Request With {.Priority = OrderPriority.Routine,
                                              .SampleCollectionTime = d.created_at,
                                              .Patient = New Patient With {.PatientID = d.PatientNo,
                                                             .BirthDate = d.DateOfBirth,
@@ -94,7 +108,7 @@ Public Class InterfaceUI
 
                 _astmConnection.PrepAndSendData(Requests)
             Catch ex As Exception
-
+                ButtonSendData.Enabled = True
             End Try
         End If
 
@@ -213,6 +227,14 @@ Public Class InterfaceUI
         UpdateLabel(LabelProtocolName, record.Version)
     End Sub
 
+    Private Sub CheckBoxQueryStatus_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBoxQueryStatus.CheckedChanged
+        If CheckBoxQueryStatus.Checked = True Then
+            CheckBoxQueryStatus.Text = "Query ON"
+            LisQueryInit.Enabled = True
 
-
+        Else
+            CheckBoxQueryStatus.Text = "Query OFF"
+            LisQueryInit.Enabled = False
+        End If
+    End Sub
 End Class
