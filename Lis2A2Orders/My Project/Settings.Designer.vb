@@ -80,7 +80,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("192.168.1.9")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("192.168.1.2")>  _
         Public Property IPAddress() As String
             Get
                 Return CType(Me("IPAddress"),String)

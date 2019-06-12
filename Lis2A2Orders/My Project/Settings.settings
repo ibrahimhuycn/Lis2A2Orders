@@ -9,7 +9,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="IPAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.1.9</Value>
+      <Value Profile="(Default)">192.168.1.2</Value>
     </Setting>
     <Setting Name="Port" Type="System.String" Scope="User">
       <Value Profile="(Default)">40001</Value>

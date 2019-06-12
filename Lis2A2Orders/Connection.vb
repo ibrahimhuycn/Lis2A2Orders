@@ -1,11 +1,13 @@
 ﻿Imports Essy.Lis.Connection
 Imports Essy.Lis.LIS02A2
+Imports slf4net
 Imports System.Reflection
 Imports System.Text
 Imports System.Threading
 
 Public Class Connection
-    Private Shared ReadOnly log As log4net.ILog = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType)
+    'Private Shared ReadOnly log As log4net.ILog = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType)
+    Private Shared ReadOnly _logger As ILogger = LoggerFactory.GetLogger(GetType(Connection))
     Private WithEvents _lisParser As LISParser
     Private _connectionSettings As Settings
     Public Shared Event PushingLogs(ByVal logMessage As String, ByVal logType As LogItem.LogType)
@@ -53,7 +55,7 @@ Public Class Connection
                 Catch ex As Exception
                     InterfaceUI.ButtonStartServer.Enabled = True
                     RaiseEvent PushingLogs(ex.Message, EventLogEntryType.Error)
-                    log.Error(ex)
+                    _logger.Error(ex.Message & vbCrLf & ex.StackTrace)
                 End Try
 
 
@@ -66,7 +68,7 @@ Public Class Connection
 
     Private Sub OnException(sender As Object, e As ThreadExceptionEventArgs)
         RaiseEvent PushingLogs(e.Exception.Message, LogItem.LogType.Exception)
-        log.Error(e.Exception)
+        _logger.Error(e.Exception.Message & e.Exception.StackTrace)
     End Sub
 
     Private Async Function StartListenerAsync(ByVal conn As Lis01A02TCPConnection) As Task
@@ -76,7 +78,7 @@ Public Class Connection
             Await Task.Run(Function() conn.StartListeningAsync())
         Catch ex As Exception
             RaiseEvent PushingLogs(ex.Message, EventLogEntryType.Error)
-            log.Error(ex.StackTrace)
+            _logger.Error(ex.StackTrace)
         End Try
 
 
