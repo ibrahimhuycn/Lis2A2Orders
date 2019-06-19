@@ -191,7 +191,7 @@ Public Class Connection
         Try
             _lisParser.SendRecords(lisRecordList)
             For Each request In e.RequestData
-                SqliteDataAccess.DeleteRequest(request.Specimen.SpecimenID)
+                SqliteDataAccess.MarkSampleSent(request.Specimen.SpecimenID)
             Next
         Catch ex As Exception
             RaiseEvent PushingLogs(ex.Message, LogItem.LogType.Exception)
