@@ -56,9 +56,8 @@
     <Reference Include="Dapper, Version=1.60.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.1.60.6\lib\net451\Dapper.dll</HintPath>
     </Reference>
-    <Reference Include="E1394-91, Version=5.2.0.34, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\34314\Downloads\OneDrive-2019-05-24\E1394-91.dll</HintPath>
+    <Reference Include="E1394-91">
+      <HintPath>..\packages\Patched\E1394-91.dll</HintPath>
     </Reference>
     <Reference Include="LIS01A2">
       <HintPath>..\packages\Patched\LIS01A2.dll</HintPath>
@@ -132,6 +131,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Resources\Icons.vb" />
     <Compile Include="SampleData\Patient.vb" />
     <Compile Include="SampleData\Request.vb" />
     <Compile Include="SampleData\Sample.vb" />

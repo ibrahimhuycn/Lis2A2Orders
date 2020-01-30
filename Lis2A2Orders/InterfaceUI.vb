@@ -7,20 +7,36 @@ Imports System.Reflection
 <Assembly: log4net.Config.XmlConfigurator(Watch:=True)>
 
 Public Class InterfaceUI
+    Implements INotifyPropertyChanged
     'Private Shared ReadOnly log As log4net.ILog = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType)
     Private Shared ReadOnly _logger As ILogger = LoggerFactory.GetLogger(GetType(InterfaceUI))
     Dim WithEvents LisQueryInit As Timer = New Timer With {.Enabled = False, .Interval = My.Settings.LisQueryIntervalMinutes * 1000}
-    Dim WithEvents DataTransmitInit As Timer = New Timer With {.Enabled = False, .Interval = 100}
+    Dim WithEvents DataTransmitInit As Timer = New Timer With {.Enabled = False, .Interval = 500}
     Private Event RequireLogsDisplay(ByVal logMessage As String, ByVal logType As LogItem.LogType)
     Private Event OnAppSettingsRefreshed(ByVal settings As Settings)
     Private Event OnRefreshAppSettings()
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
     Private Delegate Sub UpdateGrid(dgv As DataGridView, row As DataGridViewRow)
     Private Delegate Sub UpdateLabels(lbl As Label, ByVal content As String)
     Private Delegate Sub UpdateProgressBar(ProgressUI As ProgressBar, Progress As Decimal)
     Dim AppSettings As Settings
     Dim DisplaySeq As Integer = 0
     Dim _astmConnection As Connection
-    Public FetchWithTime As String
+    Dim _fetchWithTime As String
+    Private Property FetchWithTime As String
+        Get
+            Return _fetchWithTime
+        End Get
+        Set
+            If _fetchWithTime Is Value Then
+                Return
+            End If
+            _fetchWithTime = Value
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(NameOf(FetchWithTime)))
+        End Set
+    End Property
+
+    Dim IsSendModeEstablished As Boolean = False
 
     Private Sub UpdateLabel(label As Label, ByVal content As String)
         If label.InvokeRequired Then
@@ -56,6 +72,22 @@ Public Class InterfaceUI
         AddHandler Connection.ReportProgress, AddressOf ProgressDisplayUI
         AddHandler ButtonStartServer.Click, AddressOf _astmConnection.InitializeConnection
         AddHandler ButtonSendData.Click, AddressOf PrepTransmissionToAnalyser
+
+        AddHandler _astmConnection.IsConnectionEstablished, AddressOf DisplayConnectionStatus
+
+    End Sub
+
+    Private Sub DisplayConnectionStatus(sender As Object, isConnected As Boolean, connectionStatus As String)
+        Dim icons As New Icons
+        Select Case isConnected
+            Case True
+                ButtonSocketStatus.Image = Icons.GetIcon(icons.Connected)
+                IsSendModeEstablished = True
+            Case False
+                ButtonSocketStatus.Image = Icons.GetIcon(icons.Disconnected)
+                IsSendModeEstablished = False
+        End Select
+        LabelConnectionStatus.Text = connectionStatus
     End Sub
 
     Private Sub QueryLisServer(sender As Object, e As EventArgs)
@@ -67,7 +99,9 @@ Public Class InterfaceUI
 
             Try
                 Dim Data As IList(Of LisRequestDataModel) = LisEnquiry.GetData(FetchWithTime).ToList
+                LabelLastFetchedOn.Text = LabelLastFetchedOn.Tag & FetchWithTime
                 FetchWithTime = Data(Data.Count - 1).created_at.ToString("yyyy/MM/dd HH:mm:ss.fff")
+                LabelNextQueryOn.Text = LabelNextQueryOn.Tag & FetchWithTime
                 ButtonSendData.Enabled = True
                 SqliteDataAccess.SaveRequest(Data)
             Catch ex As Exception
@@ -85,17 +119,23 @@ Public Class InterfaceUI
             Return New List(Of LisRequestDataModel)
         End Try
     End Function
+
+
     Private Sub PrepTransmissionToAnalyser(sender As Object, e As EventArgs)
+
         DataTransmitInit.Enabled = False
         If ButtonStartServer.Enabled = True Then
             DataTransmitInit.Enabled = True
             Exit Sub
         End If
-        Dim Data = QueryLocalDB()
+
+
+        Dim Data As List(Of LisRequestDataModel) = QueryLocalDB()
 
         If Not Data.Count = 0 Then
 
             Try
+
                 Dim Requests As New RequestDataEventArgs
                 Requests.RequestData.Clear()
 
@@ -260,5 +300,9 @@ Public Class InterfaceUI
             CheckBoxQueryStatus.Text = "Query OFF"
             LisQueryInit.Enabled = False
         End If
+    End Sub
+
+    Private Sub ButtonSaveOptions_Click(sender As Object, e As EventArgs) Handles ButtonSaveOptions.Click
+        FetchWithTime = DatePicker.Text & " " & TimePicker.Text
     End Sub
 End Class

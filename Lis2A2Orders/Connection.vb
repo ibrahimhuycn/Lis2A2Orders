@@ -10,12 +10,14 @@ Public Class Connection
     Private Shared ReadOnly _logger As ILogger = LoggerFactory.GetLogger(GetType(Connection))
     Private WithEvents _lisParser As LISParser
     Private _connectionSettings As Settings
+    Private _lisConnection As Lis01A2Connection
     Public Shared Event PushingLogs(ByVal logMessage As String, ByVal logType As LogItem.LogType)
     Public Shared Event ReportProgress(ByVal progress As Double)
     Public Shared Event ReceivedHeader(ByVal sender As Object, ByVal record As HeaderRecord)
     Public Shared Event ReceivedPatient(ByVal sender As Object, ByVal record As PatientRecord)
     Public Shared Event ReceiveQuery(ByVal sender As Object, ByVal record As QueryRecord)
     Public Shared Event StartListener(ByVal conn As Lis01A02TCPConnection)
+    Public Event IsConnectionEstablished(ByVal sender As Object, ByVal isConnected As Boolean, connectionStatus As String)
 
     Public Sub New(ByVal connectionSettings As Settings)
         Me._connectionSettings = connectionSettings
@@ -35,19 +37,19 @@ Public Class Connection
 
                 Try
 
-                    Dim lisConnection As New Lis01A2Connection(lowLevelConnection)
-                    _lisParser = New LISParser(lisConnection)
+                    _lisConnection = New Lis01A2Connection(lowLevelConnection)
+                    _lisParser = New LISParser(_lisConnection)
                     AddHandler _lisParser.OnExceptionHappened, AddressOf OnException
                     Select Case connectionSettings.IsServer
                         Case True
                             Dim a = StartListenerAsync(lowLevelConnection).GetAwaiter()
-                            MsgBox(a.IsCompleted.ToString)
+                            'MsgBox(a.IsCompleted.ToString)
                             ' RaiseEvent StartListener(lowLevelConnection)
                             _lisParser.Connection.Status = LisConnectionStatus.Idle
                         Case False
 
                             _lisParser.Connection.Connect()
-                            _lisParser.Connection.Status = LisConnectionStatus.Idle
+                            'CheckConnectionStatus()
 
                     End Select
                     AddHandler _lisParser.OnSendProgress, AddressOf LISParser_OnSendProgress
@@ -64,6 +66,7 @@ Public Class Connection
                 Dim lowLevelConnection = New Lis01A02RS232Connection(SerialPort)
                 Dim lisConnection = New Lis01A2Connection(lowLevelConnection)
         End Select
+
     End Sub
 
     Private Sub OnException(sender As Object, e As ThreadExceptionEventArgs)
@@ -111,9 +114,6 @@ Public Class Connection
             Case LisRecordType.Scientific
             Case LisRecordType.Information
         End Select
-
-        '_lisParser.Connection.Status = LisConnectionStatus.Receiving
-        '_lisParser.Connection.StartReceiveTimeoutTimer()
     End Sub
 
     Private Sub LISParser_OnSendProgress(ByVal sender As Object, ByVal e As SendProgressEventArgs)
@@ -134,10 +134,6 @@ Public Class Connection
 
         Return ReplcedAstmFrame.ToString
     End Function
-
-    Public Async Sub SendDataAsync(e As RequestDataEventArgs)
-        Await Task.Run(Sub() PrepAndSendData(e))
-    End Sub
 
     Public Sub PrepAndSendData(e As RequestDataEventArgs)
         Dim lisRecordList = New List(Of Essy.Lis.LIS02A2.AbstractLisRecord)()
@@ -188,13 +184,33 @@ Public Class Connection
         Dim tr = New TerminatorRecord()
         lisRecordList.Add(tr)
         InterfaceUI.ButtonSendData.Enabled = True
+
         Try
-            _lisParser.SendRecords(lisRecordList)
+            RaiseEvent IsConnectionEstablished(Me, True, LisConnectionStatus.Sending.ToString)
+            If _lisConnection.Status = LisConnectionStatus.Idle Then
+
+                RaiseEvent IsConnectionEstablished(Me, True, _lisConnection.Status.ToString)
+                _lisParser.SendRecords(lisRecordList)
+                RaiseEvent IsConnectionEstablished(Me, True, _lisConnection.Status.ToString)
+
+            End If
+
+        Catch ex As Exception
+            RaiseEvent PushingLogs(ex.Message, LogItem.LogType.Exception)
+            Exit Sub
+        End Try
+
+        Try
             For Each request In e.RequestData
                 SqliteDataAccess.DeleteRequest(request.Specimen.SpecimenID)
+                RaiseEvent IsConnectionEstablished(Me, True, _lisConnection.Status.ToString)
             Next
+            RaiseEvent IsConnectionEstablished(Me, True, _lisConnection.Status.ToString)
+
         Catch ex As Exception
             RaiseEvent PushingLogs(ex.Message, LogItem.LogType.Exception)
         End Try
+
+
     End Sub
 End Class

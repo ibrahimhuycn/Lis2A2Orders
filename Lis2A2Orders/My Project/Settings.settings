@@ -2,14 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
   <Profiles />
   <Settings>
-    <Setting Name="AppName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">U-WAM Order Server</Value>
-    </Setting>
     <Setting Name="IsServer" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="IPAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.1.2</Value>
+      <Value Profile="(Default)">192.168.43.138</Value>
     </Setting>
     <Setting Name="Port" Type="System.String" Scope="User">
       <Value Profile="(Default)">40001</Value>
@@ -69,7 +66,10 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LisQueryIntervalMinutes" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">15</Value>
+      <Value Profile="(Default)">60</Value>
+    </Setting>
+    <Setting Name="AppName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Swat,Inc. Interface</Value>
     </Setting>
   </Settings>
 </SettingsFile>

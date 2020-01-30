@@ -26,6 +26,7 @@ Partial Class InterfaceUI
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(InterfaceUI))
         Me.TabControlOrders = New System.Windows.Forms.TabControl()
         Me.TabPageDetails = New System.Windows.Forms.TabPage()
+        Me.CheckBoxQueryStatus = New System.Windows.Forms.CheckBox()
         Me.ButtonSettings = New System.Windows.Forms.Button()
         Me.ButtonSendData = New System.Windows.Forms.Button()
         Me.ButtonStartServer = New System.Windows.Forms.Button()
@@ -39,6 +40,7 @@ Partial Class InterfaceUI
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.LabelAnalyserName = New System.Windows.Forms.Label()
         Me.GroupBoxSocketInfo = New System.Windows.Forms.GroupBox()
+        Me.LabelConnectionStatus = New System.Windows.Forms.Label()
         Me.LabelPort = New System.Windows.Forms.Label()
         Me.ButtonSocketStatus = New System.Windows.Forms.Button()
         Me.LabelModeIndicator = New System.Windows.Forms.Label()
@@ -58,7 +60,13 @@ Partial Class InterfaceUI
         Me.ToolStripMenuItemSendOrders = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItemExit = New System.Windows.Forms.ToolStripMenuItem()
         Me.OrdersFileDialog = New System.Windows.Forms.OpenFileDialog()
-        Me.CheckBoxQueryStatus = New System.Windows.Forms.CheckBox()
+        Me.TabPageOptions = New System.Windows.Forms.TabPage()
+        Me.LabelLastFetchedOn = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.DatePicker = New System.Windows.Forms.DateTimePicker()
+        Me.TimePicker = New System.Windows.Forms.DateTimePicker()
+        Me.ButtonSaveOptions = New System.Windows.Forms.Button()
+        Me.LabelNextQueryOn = New System.Windows.Forms.Label()
         Me.TabControlOrders.SuspendLayout()
         Me.TabPageDetails.SuspendLayout()
         Me.GroupBoxOrderTransmission.SuspendLayout()
@@ -67,12 +75,14 @@ Partial Class InterfaceUI
         Me.TabPageLogs.SuspendLayout()
         CType(Me.DataGridViewDisplayLogs, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStripNotifyIcon.SuspendLayout()
+        Me.TabPageOptions.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControlOrders
         '
         Me.TabControlOrders.Controls.Add(Me.TabPageDetails)
         Me.TabControlOrders.Controls.Add(Me.TabPageLogs)
+        Me.TabControlOrders.Controls.Add(Me.TabPageOptions)
         Me.TabControlOrders.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControlOrders.Font = New System.Drawing.Font("Cambria", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TabControlOrders.Location = New System.Drawing.Point(0, 0)
@@ -100,6 +110,18 @@ Partial Class InterfaceUI
         Me.TabPageDetails.TabIndex = 0
         Me.TabPageDetails.Text = "Details"
         Me.TabPageDetails.UseVisualStyleBackColor = True
+        '
+        'CheckBoxQueryStatus
+        '
+        Me.CheckBoxQueryStatus.AutoSize = True
+        Me.CheckBoxQueryStatus.Checked = True
+        Me.CheckBoxQueryStatus.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBoxQueryStatus.Location = New System.Drawing.Point(187, 3)
+        Me.CheckBoxQueryStatus.Name = "CheckBoxQueryStatus"
+        Me.CheckBoxQueryStatus.Size = New System.Drawing.Size(77, 18)
+        Me.CheckBoxQueryStatus.TabIndex = 22
+        Me.CheckBoxQueryStatus.Text = "Query ON"
+        Me.CheckBoxQueryStatus.UseVisualStyleBackColor = True
         '
         'ButtonSettings
         '
@@ -224,6 +246,7 @@ Partial Class InterfaceUI
         '
         'GroupBoxSocketInfo
         '
+        Me.GroupBoxSocketInfo.Controls.Add(Me.LabelConnectionStatus)
         Me.GroupBoxSocketInfo.Controls.Add(Me.LabelPort)
         Me.GroupBoxSocketInfo.Controls.Add(Me.ButtonSocketStatus)
         Me.GroupBoxSocketInfo.Controls.Add(Me.LabelModeIndicator)
@@ -236,6 +259,16 @@ Partial Class InterfaceUI
         Me.GroupBoxSocketInfo.TabIndex = 13
         Me.GroupBoxSocketInfo.TabStop = False
         Me.GroupBoxSocketInfo.Text = "Socket Infomation"
+        '
+        'LabelConnectionStatus
+        '
+        Me.LabelConnectionStatus.AutoSize = True
+        Me.LabelConnectionStatus.Font = New System.Drawing.Font("Cambria", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelConnectionStatus.Location = New System.Drawing.Point(36, 53)
+        Me.LabelConnectionStatus.Name = "LabelConnectionStatus"
+        Me.LabelConnectionStatus.Size = New System.Drawing.Size(54, 12)
+        Me.LabelConnectionStatus.TabIndex = 21
+        Me.LabelConnectionStatus.Text = "Con Status"
         '
         'LabelPort
         '
@@ -260,7 +293,7 @@ Partial Class InterfaceUI
         '
         Me.LabelModeIndicator.AutoSize = True
         Me.LabelModeIndicator.Font = New System.Drawing.Font("Cambria", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelModeIndicator.Location = New System.Drawing.Point(46, 48)
+        Me.LabelModeIndicator.Location = New System.Drawing.Point(36, 40)
         Me.LabelModeIndicator.Name = "LabelModeIndicator"
         Me.LabelModeIndicator.Size = New System.Drawing.Size(52, 12)
         Me.LabelModeIndicator.TabIndex = 17
@@ -400,17 +433,78 @@ Partial Class InterfaceUI
         '
         Me.OrdersFileDialog.FileName = "Orders"
         '
-        'CheckBoxQueryStatus
+        'TabPageOptions
         '
-        Me.CheckBoxQueryStatus.AutoSize = True
-        Me.CheckBoxQueryStatus.Checked = True
-        Me.CheckBoxQueryStatus.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBoxQueryStatus.Location = New System.Drawing.Point(187, 3)
-        Me.CheckBoxQueryStatus.Name = "CheckBoxQueryStatus"
-        Me.CheckBoxQueryStatus.Size = New System.Drawing.Size(77, 18)
-        Me.CheckBoxQueryStatus.TabIndex = 22
-        Me.CheckBoxQueryStatus.Text = "Query ON"
-        Me.CheckBoxQueryStatus.UseVisualStyleBackColor = True
+        Me.TabPageOptions.Controls.Add(Me.LabelNextQueryOn)
+        Me.TabPageOptions.Controls.Add(Me.ButtonSaveOptions)
+        Me.TabPageOptions.Controls.Add(Me.TimePicker)
+        Me.TabPageOptions.Controls.Add(Me.DatePicker)
+        Me.TabPageOptions.Controls.Add(Me.Label6)
+        Me.TabPageOptions.Controls.Add(Me.LabelLastFetchedOn)
+        Me.TabPageOptions.Location = New System.Drawing.Point(4, 23)
+        Me.TabPageOptions.Name = "TabPageOptions"
+        Me.TabPageOptions.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPageOptions.Size = New System.Drawing.Size(420, 131)
+        Me.TabPageOptions.TabIndex = 2
+        Me.TabPageOptions.Text = "LIS Query Options"
+        Me.TabPageOptions.UseVisualStyleBackColor = True
+        '
+        'LabelLastFetchedOn
+        '
+        Me.LabelLastFetchedOn.AutoSize = True
+        Me.LabelLastFetchedOn.Location = New System.Drawing.Point(6, 3)
+        Me.LabelLastFetchedOn.Name = "LabelLastFetchedOn"
+        Me.LabelLastFetchedOn.Size = New System.Drawing.Size(90, 14)
+        Me.LabelLastFetchedOn.TabIndex = 0
+        Me.LabelLastFetchedOn.Tag = "Last Query On: "
+        Me.LabelLastFetchedOn.Text = "Last Query On:  "
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(6, 52)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(170, 14)
+        Me.Label6.TabIndex = 1
+        Me.Label6.Tag = ""
+        Me.Label6.Text = "Set Next Query Date and Time: "
+        '
+        'DatePicker
+        '
+        Me.DatePicker.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.DatePicker.Location = New System.Drawing.Point(9, 69)
+        Me.DatePicker.Name = "DatePicker"
+        Me.DatePicker.Size = New System.Drawing.Size(91, 22)
+        Me.DatePicker.TabIndex = 2
+        '
+        'TimePicker
+        '
+        Me.TimePicker.CustomFormat = "HH:mm"
+        Me.TimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom
+        Me.TimePicker.Location = New System.Drawing.Point(106, 69)
+        Me.TimePicker.Name = "TimePicker"
+        Me.TimePicker.ShowUpDown = True
+        Me.TimePicker.Size = New System.Drawing.Size(70, 22)
+        Me.TimePicker.TabIndex = 3
+        '
+        'ButtonSaveOptions
+        '
+        Me.ButtonSaveOptions.Location = New System.Drawing.Point(182, 68)
+        Me.ButtonSaveOptions.Name = "ButtonSaveOptions"
+        Me.ButtonSaveOptions.Size = New System.Drawing.Size(70, 23)
+        Me.ButtonSaveOptions.TabIndex = 4
+        Me.ButtonSaveOptions.Text = "Save"
+        Me.ButtonSaveOptions.UseVisualStyleBackColor = True
+        '
+        'LabelNextQueryOn
+        '
+        Me.LabelNextQueryOn.AutoSize = True
+        Me.LabelNextQueryOn.Location = New System.Drawing.Point(3, 17)
+        Me.LabelNextQueryOn.Name = "LabelNextQueryOn"
+        Me.LabelNextQueryOn.Size = New System.Drawing.Size(90, 14)
+        Me.LabelNextQueryOn.TabIndex = 5
+        Me.LabelNextQueryOn.Tag = "Next Query On: "
+        Me.LabelNextQueryOn.Text = "Next Query On: "
         '
         'InterfaceUI
         '
@@ -434,6 +528,8 @@ Partial Class InterfaceUI
         Me.TabPageLogs.ResumeLayout(False)
         CType(Me.DataGridViewDisplayLogs, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStripNotifyIcon.ResumeLayout(False)
+        Me.TabPageOptions.ResumeLayout(False)
+        Me.TabPageOptions.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -473,4 +569,12 @@ Partial Class InterfaceUI
     Friend WithEvents LabelModeIndicator As Label
     Friend WithEvents ButtonSettings As Button
     Friend WithEvents CheckBoxQueryStatus As CheckBox
+    Friend WithEvents LabelConnectionStatus As Label
+    Friend WithEvents TabPageOptions As TabPage
+    Friend WithEvents Label6 As Label
+    Friend WithEvents LabelLastFetchedOn As Label
+    Friend WithEvents TimePicker As DateTimePicker
+    Friend WithEvents DatePicker As DateTimePicker
+    Friend WithEvents ButtonSaveOptions As Button
+    Friend WithEvents LabelNextQueryOn As Label
 End Class
