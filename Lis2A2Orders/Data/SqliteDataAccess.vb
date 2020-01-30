@@ -2,6 +2,8 @@
 Imports Dapper
 
 Public Class SqliteDataAccess
+    Public Shared Event PushingLogs(ByVal logMessage As String, ByVal logType As LogItem.LogType)
+
     Public Shared Function LoadRequests() As List(Of LisRequestDataModel)
         Using cnn As IDbConnection = New SQLiteConnection(Helper.GetConnectionString("localdb", True))
             Dim Output As List(Of LisRequestDataModel) = cnn.Query(Of LisRequestDataModel)("SELECT * FROM [AnalysisRequest]", New DynamicParameters)
@@ -13,15 +15,20 @@ Public Class SqliteDataAccess
 
         For Each request In e
             If IsRecordPresent(request.Barcode) = False Then
-                Using cnn As IDbConnection = New SQLiteConnection(Helper.GetConnectionString("localdb", True))
-                    cnn.Execute("INSERT INTO [AnalysisRequest] ([Barcode],[PatientNo],[PatientName],[Genders_id],[DateOfBirth],[created_at]) values (@Barcode,@PatientNo,@PatientName,@Genders_id,@DateOfBirth,@created_at)", request)
-                End Using
+                Try
+                    Using cnn As IDbConnection = New SQLiteConnection(Helper.GetConnectionString("localdb", True))
+                        cnn.Execute("INSERT INTO [AnalysisRequest] ([Barcode],[PatientNo],[PatientName],[Genders_id],[DateOfBirth],[created_at]) values (@Barcode,@PatientNo,@PatientName,@Genders_id,@DateOfBirth,@created_at)", request)
+                    End Using
+
+                Catch ex As Exception
+                    RaiseEvent PushingLogs(ex.Message, LogItem.LogType.Exception)
+                End Try
             Else
                 'log the presence of record for the sample barcode.
             End If
         Next
 
-
+        RaiseEvent PushingLogs($"Received Orders from LIS: {e.Count()} order(s)", LogItem.LogType.Information)
 
     End Sub
     Public Shared Sub DeleteRequest(Barcode As String)
@@ -34,6 +41,7 @@ Public Class SqliteDataAccess
     Public Shared Function LoadOneRequests() As List(Of LisRequestDataModel)
         Using cnn As IDbConnection = New SQLiteConnection(Helper.GetConnectionString("localdb", True))
             Dim Output As List(Of LisRequestDataModel) = cnn.Query(Of LisRequestDataModel)("SELECT * FROM [AnalysisRequest] LIMIT 1")
+            RaiseEvent PushingLogs($"Preparing to transmit {Output.ToList.FirstOrDefault.ToString}", LogItem.LogType.Information)
             Return Output.ToList
         End Using
     End Function

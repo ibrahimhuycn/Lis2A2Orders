@@ -11,6 +11,7 @@ Public Class Connection
     Private WithEvents _lisParser As LISParser
     Private _connectionSettings As Settings
     Private _lisConnection As Lis01A2Connection
+    Public Event StartServerButtonState(enabled As Boolean)
     Public Shared Event PushingLogs(ByVal logMessage As String, ByVal logType As LogItem.LogType)
     Public Shared Event ReportProgress(ByVal progress As Double)
     Public Shared Event ReceivedHeader(ByVal sender As Object, ByVal record As HeaderRecord)
@@ -21,11 +22,10 @@ Public Class Connection
 
     Public Sub New(ByVal connectionSettings As Settings)
         Me._connectionSettings = connectionSettings
-
     End Sub
 
     Public Sub InitializeConnection()
-        InterfaceUI.ButtonStartServer.Enabled = False
+        RaiseEvent StartServerButtonState(False)
         Dim connectionSettings As Settings = Me._connectionSettings
         Select Case connectionSettings.ConnectionType
 
@@ -43,19 +43,16 @@ Public Class Connection
                     Select Case connectionSettings.IsServer
                         Case True
                             Dim a = StartListenerAsync(lowLevelConnection).GetAwaiter()
-                            'MsgBox(a.IsCompleted.ToString)
-                            ' RaiseEvent StartListener(lowLevelConnection)
                             _lisParser.Connection.Status = LisConnectionStatus.Idle
                         Case False
 
                             _lisParser.Connection.Connect()
-                            'CheckConnectionStatus()
 
                     End Select
                     AddHandler _lisParser.OnSendProgress, AddressOf LISParser_OnSendProgress
                     AddHandler _lisParser.OnReceivedRecord, AddressOf LISParser_OnReceivedRecord
                 Catch ex As Exception
-                    InterfaceUI.ButtonStartServer.Enabled = True
+                    RaiseEvent StartServerButtonState(True)
                     RaiseEvent PushingLogs(ex.Message, EventLogEntryType.Error)
                     _logger.Error(ex.Message & vbCrLf & ex.StackTrace)
                 End Try
@@ -190,13 +187,15 @@ Public Class Connection
             If _lisConnection.Status = LisConnectionStatus.Idle Then
 
                 RaiseEvent IsConnectionEstablished(Me, True, _lisConnection.Status.ToString)
-                _lisParser.SendRecords(lisRecordList)
+                If _lisParser Is Nothing Then Exit Sub
+                _lisParser?.SendRecords(lisRecordList)
                 RaiseEvent IsConnectionEstablished(Me, True, _lisConnection.Status.ToString)
 
             End If
 
         Catch ex As Exception
             RaiseEvent PushingLogs(ex.Message, LogItem.LogType.Exception)
+            RaiseEvent IsConnectionEstablished(Me, True, "Error Sending...")
             Exit Sub
         End Try
 

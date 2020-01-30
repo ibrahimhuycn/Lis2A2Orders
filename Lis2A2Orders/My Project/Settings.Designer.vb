@@ -56,7 +56,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
         Public Property IsServer() As Boolean
             Get
                 Return CType(Me("IsServer"),Boolean)
@@ -68,7 +68,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("192.168.43.138")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("10.0.110.168")>  _
         Public Property IPAddress() As String
             Get
                 Return CType(Me("IPAddress"),String)
@@ -309,7 +309,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("60")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("2")>  _
         Public Property LisQueryIntervalMinutes() As Integer
             Get
                 Return CType(Me("LisQueryIntervalMinutes"),Integer)

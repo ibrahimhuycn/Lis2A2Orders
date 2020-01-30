@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="IsServer" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="IPAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.43.138</Value>
+      <Value Profile="(Default)">10.0.110.168</Value>
     </Setting>
     <Setting Name="Port" Type="System.String" Scope="User">
       <Value Profile="(Default)">40001</Value>
@@ -66,7 +66,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LisQueryIntervalMinutes" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">60</Value>
+      <Value Profile="(Default)">2</Value>
     </Setting>
     <Setting Name="AppName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Swat,Inc. Interface</Value>

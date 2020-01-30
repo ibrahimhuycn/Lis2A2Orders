@@ -68,13 +68,20 @@ Public Class InterfaceUI
         AddHandler DataTransmitInit.Tick, AddressOf PrepTransmissionToAnalyser
         AddHandler Me.RequireLogsDisplay, AddressOf DisplayLogItem
         AddHandler Connection.PushingLogs, AddressOf DisplayLogItem
+        AddHandler SqliteDataAccess.PushingLogs, AddressOf DisplayLogItem
         AddHandler Connection.ReceivedHeader, AddressOf UpdateUIBasedOnHeader
         AddHandler Connection.ReportProgress, AddressOf ProgressDisplayUI
         AddHandler ButtonStartServer.Click, AddressOf _astmConnection.InitializeConnection
         AddHandler ButtonSendData.Click, AddressOf PrepTransmissionToAnalyser
 
         AddHandler _astmConnection.IsConnectionEstablished, AddressOf DisplayConnectionStatus
+        AddHandler _astmConnection.StartServerButtonState, AddressOf EnableDisableButton
 
+
+    End Sub
+
+    Private Sub EnableDisableButton(enabled As Boolean)
+        Me.ButtonStartServer.Enabled = enabled
     End Sub
 
     Private Sub DisplayConnectionStatus(sender As Object, isConnected As Boolean, connectionStatus As String)
