@@ -168,7 +168,7 @@ Public Class Connection
                     .SpecimenCollectionDateTime = request.SampleCollectionTime,
                     .OrderingPhysician = "D1^D^A^^^Dr.",
                     .PhysicianTelephoneNumber = "01-123-4567",
-                    .UserFieldNumber1 = Now.ToString("HHmmssfff"),
+                    .UserFieldNumber1 = Now.ToString("ddMMyyHHmmssfff"),
                     .LocationSpecimenCollection = "OPD^E^C.PATH-5678-0123",
                     .SpecimenInstitution = "C. Path^Clinical Pathology"}  'OrderNumber a SubString of Time
 
@@ -187,7 +187,10 @@ Public Class Connection
             If _lisConnection.Status = LisConnectionStatus.Idle Then
 
                 RaiseEvent IsConnectionEstablished(Me, True, _lisConnection.Status.ToString)
-                If _lisParser Is Nothing Then Exit Sub
+                If _lisParser Is Nothing Then
+                    InitializeConnection()
+                    Exit Sub
+                End If
                 _lisParser?.SendRecords(lisRecordList)
                 RaiseEvent IsConnectionEstablished(Me, True, _lisConnection.Status.ToString)
 
