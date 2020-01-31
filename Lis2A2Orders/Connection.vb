@@ -196,23 +196,22 @@ Public Class Connection
 
             End If
 
+            Try
+                For Each request In e.RequestData
+                    SqliteDataAccess.DeleteRequest(request.Specimen.SpecimenID)
+                    RaiseEvent IsConnectionEstablished(Me, True, _lisConnection.Status.ToString)
+                Next
+                RaiseEvent IsConnectionEstablished(Me, True, _lisConnection.Status.ToString)
+
+            Catch ex As Exception
+                RaiseEvent PushingLogs(ex.Message, LogItem.LogType.Exception)
+            End Try
+
         Catch ex As Exception
             RaiseEvent PushingLogs(ex.Message, LogItem.LogType.Exception)
             RaiseEvent IsConnectionEstablished(Me, True, "Error Sending...")
             Exit Sub
         End Try
-
-        Try
-            For Each request In e.RequestData
-                SqliteDataAccess.DeleteRequest(request.Specimen.SpecimenID)
-                RaiseEvent IsConnectionEstablished(Me, True, _lisConnection.Status.ToString)
-            Next
-            RaiseEvent IsConnectionEstablished(Me, True, _lisConnection.Status.ToString)
-
-        Catch ex As Exception
-            RaiseEvent PushingLogs(ex.Message, LogItem.LogType.Exception)
-        End Try
-
 
     End Sub
 End Class

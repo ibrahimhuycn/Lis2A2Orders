@@ -11,7 +11,7 @@ Public Class InterfaceUI
     'Private Shared ReadOnly log As log4net.ILog = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType)
     Private Shared ReadOnly _logger As ILogger = LoggerFactory.GetLogger(GetType(InterfaceUI))
     Dim WithEvents LisQueryInit As Timer = New Timer With {.Enabled = False, .Interval = My.Settings.LisQueryIntervalMinutes * 1000}
-    Dim WithEvents DataTransmitInit As Timer = New Timer With {.Enabled = False, .Interval = 500}
+    Dim WithEvents DataTransmitInit As Timer = New Timer With {.Enabled = False, .Interval = 20}
     Private Event RequireLogsDisplay(ByVal logMessage As String, ByVal logType As LogItem.LogType)
     Private Event OnAppSettingsRefreshed(ByVal settings As Settings)
     Private Event OnRefreshAppSettings()
@@ -104,10 +104,21 @@ Public Class InterfaceUI
                 FetchWithTime = Now.ToString("yyyy/MM/dd" & " 00:00:00.000")
             End If
 
+            RaiseEvent RequireLogsDisplay("Querying LIS server for samples.", LogItem.LogType.Information)
+
             Try
                 Dim Data As IList(Of LisRequestDataModel) = LisEnquiry.GetData(FetchWithTime).ToList
+
+                'If the query result does not have any samples then exit sub.
+                If Data.Count = 0 Then
+                    RaiseEvent RequireLogsDisplay("LIS didn't return any samples...", LogItem.LogType.Information)
+
+                    Exit Sub
+                End If
+
                 LabelLastFetchedOn.Text = LabelLastFetchedOn.Tag & FetchWithTime
-                FetchWithTime = Data(Data.Count - 1).created_at.ToString("yyyy/MM/dd HH:mm:ss.fff")
+                FetchWithTime = Data(Data.Count - 1).created_at.AddMinutes(1).ToString("yyyy/MM/dd HH:mm:ss.fff")
+
                 LabelNextQueryOn.Text = LabelNextQueryOn.Tag & FetchWithTime
                 ButtonSendData.Enabled = True
                 SqliteDataAccess.SaveRequest(Data)
@@ -119,7 +130,9 @@ Public Class InterfaceUI
     End Sub
     Private Function QueryLocalDB() As List(Of LisRequestDataModel)
         Try
+            RaiseEvent RequireLogsDisplay("2.1", LogItem.LogType.Information)
             Dim Data As List(Of LisRequestDataModel) = SqliteDataAccess.LoadOneRequests()
+            RaiseEvent RequireLogsDisplay("2.2", LogItem.LogType.Information)
             Return Data
         Catch ex As Exception
             RaiseEvent RequireLogsDisplay(ex.Message, LogItem.LogType.Exception)
@@ -136,15 +149,26 @@ Public Class InterfaceUI
             Exit Sub
         End If
 
+        RaiseEvent RequireLogsDisplay("1.0", LogItem.LogType.Information)
 
         Dim Data As List(Of LisRequestDataModel) = QueryLocalDB()
+        If Data Is Nothing Then Exit Sub
+        RaiseEvent RequireLogsDisplay("1.1", LogItem.LogType.Information)
+
+        RaiseEvent RequireLogsDisplay($"Count of data list read from localDB: {Data.Count}", LogItem.LogType.Information)
 
         If Not Data.Count = 0 Then
+            'Increase the checking job rate... since samples are present
+            DataTransmitInit.Interval = 20
+            RaiseEvent RequireLogsDisplay($"Checking for new samples after {DataTransmitInit.Interval} milliseconds", LogItem.LogType.Information)
+
+            RaiseEvent RequireLogsDisplay("1.2", LogItem.LogType.Information)
 
             Try
 
                 Dim Requests As New RequestDataEventArgs
                 Requests.RequestData.Clear()
+                RaiseEvent RequireLogsDisplay("2", LogItem.LogType.Information)
 
                 For Each d In Data
                     Dim Sex As PatientSex
@@ -154,10 +178,10 @@ Public Class InterfaceUI
                     Dim FirstName As String = ""
                     Dim PatientNamesSplit = d.PatientName.Split(" ")
                     LastName = PatientNamesSplit(PatientNamesSplit.Count - 1)
-                    Dim RequestedTestsList As String = ""
-                    If My.Settings.ActiveTestOrders.ToUpper = "ALL" Then RequestedTestsList = My.Settings.ParametersAll
-                    If My.Settings.ActiveTestOrders.ToUpper = "CHM" Then RequestedTestsList = My.Settings.ParametersCHM
-                    If My.Settings.ActiveTestOrders.ToUpper = "FCM" Then RequestedTestsList = My.Settings.ParametersFCM
+                    Dim RequestedTestsGroup As String = ""
+                    If My.Settings.ActiveTestOrders.ToUpper = "ALL" Then RequestedTestsGroup = My.Settings.ParametersAll
+                    If My.Settings.ActiveTestOrders.ToUpper = "CHM" Then RequestedTestsGroup = My.Settings.ParametersCHM
+                    If My.Settings.ActiveTestOrders.ToUpper = "FCM" Then RequestedTestsGroup = My.Settings.ParametersFCM
 
                     For Each n In PatientNamesSplit
                         If Not n = LastName Then
@@ -165,6 +189,8 @@ Public Class InterfaceUI
                         End If
                         FirstName.Trim()
                     Next
+
+                    RaiseEvent RequireLogsDisplay("3", LogItem.LogType.Information)
 
                     'Note Action code will be set during transmission
                     Requests.RequestData.Add(New Request With {.Priority = OrderPriority.Routine,
@@ -174,15 +200,26 @@ Public Class InterfaceUI
                                                             .PatientSex = Sex,
                                                             .PatientName = New PatientName With {.LastName = LastName, .FirstName = FirstName}},
                                               .Specimen = New Sample With {.SpecimenID = d.Barcode},
-                                              .RequestedTests = RequestedTestsList})
+                                              .RequestedTests = RequestedTestsGroup})
                 Next
 
                 _astmConnection.PrepAndSendData(Requests)
+                RaiseEvent RequireLogsDisplay("4", LogItem.LogType.Information)
             Catch ex As Exception
                 RaiseEvent RequireLogsDisplay(ex.Message, LogItem.LogType.Exception)
+                RaiseEvent RequireLogsDisplay("5", LogItem.LogType.Information)
+
             End Try
+
+        Else
+            'Since there are no samples on LocalDB, increase the time interval to check for samples.
+            DataTransmitInit.Interval = 5000
+            RaiseEvent RequireLogsDisplay($"Checking for new samples after {DataTransmitInit.Interval} milliseconds", LogItem.LogType.Information)
+
         End If
         DataTransmitInit.Enabled = True
+        RaiseEvent RequireLogsDisplay("6", LogItem.LogType.Information)
+
     End Sub
 
     Private Sub ProgressDisplayUI(progress As Double)
