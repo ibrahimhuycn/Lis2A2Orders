@@ -10,7 +10,7 @@ Public Class InterfaceUI
     Implements INotifyPropertyChanged
     'Private Shared ReadOnly log As log4net.ILog = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType)
     Private Shared ReadOnly _logger As ILogger = LoggerFactory.GetLogger(GetType(InterfaceUI))
-    Dim WithEvents LisQueryInit As Timer = New Timer With {.Enabled = False, .Interval = My.Settings.LisQueryIntervalMinutes * 1000}
+    Dim WithEvents LisQueryInit As Timer = New Timer With {.Enabled = False, .Interval = My.Settings.LisQueryIntervalMinutes * 1000 * 60}
     Dim WithEvents DataTransmitInit As Timer = New Timer With {.Enabled = False, .Interval = 20}
     Private Event RequireLogsDisplay(ByVal logMessage As String, ByVal logType As LogItem.LogType)
     Private Event OnAppSettingsRefreshed(ByVal settings As Settings)
