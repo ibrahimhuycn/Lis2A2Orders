@@ -7,12 +7,12 @@ Public Class LisEnquiry
     Public Shared Function GetData(Created_at As String) As IEnumerable(Of LisRequestDataModel)
         Using cnn As IDbConnection = New SqlConnection(Helper.GetConnectionString("lis"))
 
-            Dim p = New With {Key .created_at = Created_at}
+            Dim p = New With {Key .created_at = Created_at, Key .fetchUptoNow = Now.ToString("yyyy/MM/dd") & " 23:59:59.999"}
 
             Dim sql As String = "SELECT DISTINCT(pt.PatientNo),lg.Barcode,lg.created_at,pt.Patient AS PatientName,pt.DateOfBirth,pt.Genders_id" &
             " FROM dbo.machineorderlog lg " &
             "INNER JOIN dbo.patients pt ON lg.Patients_id = pt.id " &
-            "WHERE lg.created_at BETWEEN @created_at AND '" & Now.ToString("yyyy/MM/dd") & " 23:59:59.999' AND lg.Barcode LIKE '%CU%'"
+            "WHERE lg.created_at BETWEEN @created_at AND @fetchUptoNow AND lg.Barcode LIKE '%CU%'"
 
 #Region "Production Code"
             Dim data As IEnumerable(Of LisRequestDataModel) = cnn.Query(Of LisRequestDataModel)(sql, p)
